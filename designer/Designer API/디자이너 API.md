@@ -12,7 +12,7 @@
 인증 및 인가와 관련된 REST API 모듈  
 게시물 작성, 수정, 삭제 리스트 보기 등의 API가 포함되어 있습니다.  
   
-- url : /api/v1 
+- url : /api/v1/designer
 
 #### - 디자이너 게시물 작성  
   
@@ -21,7 +21,7 @@
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 제목, 내용을 입력받고 작성에 성공하면 성공처리를 합니다. 만약 작성에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
 
 - method : **POST**  
-- URL : **/designer_board**  
+- URL : **/board**  
 
 ##### Request
 
@@ -41,7 +41,7 @@
 ###### Example
 
 ```bash
-curl -v -X POST "http://localhost:4200/api/v1/designer_board/" \
+curl -v -X POST "http://localhost:4200/api/v1/designer/board/" \
  -H "Authorization: Bearer {JWT}" \
  -d "title={title}" \
  -d "contents={contents}
@@ -123,7 +123,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 요청을 보내면 작성일 기준 내림차순으로 게시물 리스트를 반환합니다. 만약 불러오기에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **GET**  
-- URL : **/designer_board/list** 
+- URL : **/board/list** 
 
 ##### Request
 
@@ -136,7 +136,7 @@ Content-Type: application/json;charset=UTF-8
 ###### Example
 
 ```bash
-curl -v -X GET "http://localhost:4200/api/v1/designer_board/list" \
+curl -v -X GET "http://localhost:4200/api/v1/designer/board/list" \
  -H "Authorization: Bearer {JWT}"
 ```
 
@@ -159,7 +159,7 @@ curl -v -X GET "http://localhost:4200/api/v1/designer_board/list" \
 **designBoardListItem**
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| designer_boardNumber | int | 디자이너 게시글 번호 | O |
+| boardNumber | int | 디자이너 게시글 번호 | O |
 | title | String | 제목 | O |
 | writerId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
 | writeDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
@@ -225,7 +225,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 검색어를 입력받고 요청을 보내면 작성일 기준 내림차순으로 제목에 해당 검색어가 포함된 게시물 리스트를 반환합니다. 만약 불러오기에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **GET**  
-- URL : **/designer_board/list/{searchWord}**  
+- URL : **/board/list/search**  
 
 ##### Request
 
@@ -235,7 +235,7 @@ Content-Type: application/json;charset=UTF-8
 |---|:---:|:---:|
 | Authorization | 인증에 사용될 Bearer 토큰 | O |
 
-###### Path Variable
+###### Request Param
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
@@ -244,7 +244,7 @@ Content-Type: application/json;charset=UTF-8
 ###### Example
 
 ```bash
-curl -v -X GET "http://localhost:4200/api/v1/designer_board/list/${searchWord}" \
+curl -v -X GET "http://localhost:4200/api/v1/designer/board/list/search?word=${searchWord}" \
  -H "Authorization: Bearer {JWT}"
 ```
 
@@ -262,12 +262,12 @@ curl -v -X GET "http://localhost:4200/api/v1/designer_board/list/${searchWord}" 
 |---|:---:|:---:|:---:|
 | code | String | 결과 코드 | O |
 | message | String | 결과 메세지 | O |
-| designer_boardList | designer_BoardListItem[] | 디자이너 게시물 리스트 | O |
+| boardList | BoardListItem[] | 디자이너 게시물 리스트 | O |
 
 **designerBoardListItem**
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| designer_boardNumber | int | 접수 번호 | O |
+| boardNumber | int | 접수 번호 | O |
 | title | String | 제목 | O |
 | writerId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
 | writeDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
@@ -334,7 +334,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 접수번호를 입력받고 요청을 보내면 해당하는 디자이너 게시물 데이터를 반환합니다. 만약 불러오기에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **GET**  
-- URL : **/designer_board/{designer_boardNumber}**  
+- URL : **/board/`${boardNumber}`**
 
 ##### Request
 
@@ -348,12 +348,12 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| designer_boardNumber | int | 접수 번호 | O |
+| boardNumber | int | 접수 번호 | O |
 
 ###### Example
 
 ```bash
-curl -v -X GET "http://localhost:4200/api/v1/designer_board/${designer_boardNumber}" \
+curl -v -X GET "http://localhost:4200/api/v1/designer/board/`${boardNumber}`" \
  -H "Authorization: Bearer {JWT}"
 ```
 
@@ -371,7 +371,7 @@ curl -v -X GET "http://localhost:4200/api/v1/designer_board/${designer_boardNumb
 |---|:---:|:---:|:---:|
 | code | String | 결과 코드 | O |
 | message | String | 결과 메세지 | O |
-| designer_boardNumber | int | 접수 번호 | O |
+| boardNumber | int | 접수 번호 | O |
 | title | String | 제목 | O |
 | writerId | String | 작성자 아이디 | O |
 | writeDatetime | String | 작성일</br>(yyyy.mm.dd 형태) | O |
@@ -448,7 +448,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 접수번호를 입력받고 요청을 보내면 해당하는 디자이너 게시물의 조회수를 증가합니다. 만약 증가에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **PATCH**  
-- URL : **/designer_board/{designer_boardNumber}/increase-view-count**  
+- URL : **/board/`${boardNumber}`/increase-view-count**  
 
 ##### Request
 
@@ -462,12 +462,12 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| receptionNumber | int | 접수 번호 | O |
+| boardNumber | int | 게시물 번호 | O |
 
 ###### Example
 
 ```bash
-curl -v -X PATCH "http://localhost:4200/api/v1/designer_board/{designer_boardNumber}/increase-view-count$" \
+curl -v -X PATCH "http://localhost:4200/api/v1/designer/board/`${boardNumber}`/increase-view-count$" \
  -H "Authorization: Bearer {JWT}"
 ```
 
@@ -548,7 +548,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 접수번호와 답글 내용을 입력받고 요청을 보내면 해당하는 디자이너 게시물의 답글이 작성됩니다. 만약 증가에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **POST**  
-- URL : **/designer_board/{designer_boardNumber}/comment**  
+- URL : **/board/`${boardNumber}`/comment**  
 
 ##### Request
 
@@ -562,7 +562,7 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| designer_boardNumber | int | 접수 번호 | O |
+| boardNumber | int | 게시물 번호 | O |
 
 ###### Request Body
 
@@ -573,7 +573,7 @@ Content-Type: application/json;charset=UTF-8
 ###### Example
 
 ```bash
-curl -v -X POST "http://localhost:4200/api/v1/board/${designer_boardNumber}/comment" \
+curl -v -X POST "http://localhost:4200/api/v1/board/`${boardNumber}`/comment" \
  -H "Authorization: Bearer {JWT}" \
  -d "comment={commnet}"
 ```
@@ -655,7 +655,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 디자이너 게시판 게시물 번호, 제목, 내용을 입력받고 수정에 성공하면 성공처리를 합니다. 만약 수정에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
 
 - method : **PUT**
-- URL : **/designer_board/{designer_boardNumber}**
+- URL : **/board/`${boardNumber}`**
 
 ##### Request
 
@@ -669,7 +669,7 @@ Content-Type: application/json;charset=UTF-8
 
 | name            | type |   description    | required |
 | --------------- | :--: | :--------------: | :------: |
-| designer_boardNumber | int  | 디자이너 게시물 번호 |    O     |
+| boardNumber | int  | 디자이너 게시물 번호 |    O     |
 
 ###### Request Body
 
@@ -681,7 +681,7 @@ Content-Type: application/json;charset=UTF-8
 ###### Example
 
 ```bash
-curl -v -X PUT "http://localhost:4200/api/v1/designer_board/{designer_boardNumber}" \
+curl -v -X PUT "http://localhost:4200/api/v1/designer/board/`${boardNumber}`" \
  -H "Authorization: Bearer {JWT}" \
  -d "title={title}" \
  -d "contents={contents}
@@ -781,7 +781,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 접수번호를 입력받고 요청을 보내면 해당하는 디자이너 게시물이 삭제됩니다. 만약 삭제에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **DELETE**  
-- URL : **/designer_board/{designer_boardNumber}**  
+- URL : **/board/`${boardNumber}`**  
 
 ##### Request
 
@@ -795,12 +795,12 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| designer_boardNumber | int | 접수 번호 | O |
+| boardNumber | int | 접수 번호 | O |
 
 ###### Example
 
 ```bash
-curl -v -X POST "http://localhost:4000/api/v1/designer_board/{designer_boardNumber}" \
+curl -v -X POST "http://localhost:4000/api/v1/designer/board/`${boardNumber}`" \
  -H "Authorization: Bearer {JWT}"
 ```
 

@@ -1,5 +1,5 @@
 
-<h1 style='background-color: rgba(55, 55, 55, 0.4); text-align: center'>API 명세서 </h1>
+<h1 style='background-color: rgba(55, 55, 55, 0.4); text-align: center'> 관리자 API 명세서 </h1>
 
 해당 API 명세서는 '관리자'의 REST API를 명세하고 있습니다.
 
@@ -7,12 +7,12 @@
 
 ***
   
-<h2 style='background-color: rgba(55, 55, 55, 0.2); text-align: center'>관리자 모듈</h2>
+<h2 style='background-color: rgba(55, 55, 55, 0.2); text-align: center'>헤어 트렌드  모듈</h2>
 
 인증 및 인가와 관련된 REST API 모듈  
 게시물 작성, 수정, 삭제 리스트 보기 의 API가 포함되어 있습니다.  
   
-- url : /api/v1  
+- url : /api/v1/trend_board
 
 #### -  헤어트렌드 게시판 게시물 작성  
   
@@ -21,7 +21,7 @@
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 제목, 내용을 입력받고 작성에 성공하면 성공처리를 합니다. 만약 작성에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
 
 - method : **POST**  
-- URL : **/trend_board**  
+- URL : **/**  
 
 ##### Request
 
@@ -125,7 +125,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 요청을 보내면 작성일 기준 내림차순으로 게시물 리스트를 반환합니다. 만약 불러오기에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **GET**  
-- URL : **/trend_board/list** 
+- URL : **/list** 
 
 ##### Request
 
@@ -227,7 +227,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 검색어를 입력받고 요청을 보내면 작성일 기준 내림차순으로 제목에 해당 검색어가 포함된 게시물 리스트를 반환합니다. 만약 불러오기에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **GET**  
-- URL : **/trend_board/list/{searchWord}**  
+- URL : **/list/{searchWord}**  
 
 ##### Request
 
@@ -338,7 +338,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 헤어 트렌드 게시물 번호를 입력받고 요청을 보내면 해당하는 헤어트렌드 게시물 데이터를 반환합니다. 만약 불러오기에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **GET**  
-- URL : **/trend_board/{trend_boardNumber}**  
+- URL : **/{trend_boardNumber}**  
 
 ##### Request
 
@@ -454,7 +454,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 게시물 번호를 입력받고 좋아요 버튼을 눌러 요청을 보내면 해당하는 헤어트렌드 게시물의 좋아요 수를 증가합니다. 만약 증가에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **PATCH**  
-- URL : **/trend_board/{trend_boardNumber}/increase-like-count**  
+- URL : **/{trend_boardNumber}/increase-like-count**  
 
 ##### Request
 
@@ -554,7 +554,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 게시물 번호와 답글 내용을 입력받고 요청을 보내면 해당하는 트렌드 게시물의 답글이 작성됩니다. 만약 증가에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **POST**  
-- URL : **/trend_board/{trend_boardNumber}/comment**  
+- URL : **/{trend_boardNumber}/comment**  
 
 ##### Request
 
@@ -661,7 +661,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 트렌드 게시물 번호를 입력받고 요청을 보내면 해당하는 헤어트렌드  게시물이 삭제됩니다. 만약 삭제에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **DELETE**
-- URL : **trend_board/{trendBoardNumber}**
+- URL : **/{trendBoardNumber}**
 
 ##### Request
 
@@ -765,7 +765,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 헤어 트렌드 게시판 게시물 번호, 제목, 내용을 입력받고 수정에 성공하면 성공처리를 합니다. 만약 수정에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
 
 - method : **PUT**
-- URL : **trend_board/{trendBoardNumber}**
+- URL : **/{trendBoardNumber}**
 
 ##### Request
 
@@ -891,7 +891,12 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
+<h2 style='background-color: rgba(55, 55, 55, 0.2); text-align: center'>Q&A 게시판  모듈</h2>
 
+인증 및 인가와 관련된 REST API 모듈  
+게시물 작성, 수정, 삭제 리스트 보기 의 API가 포함되어 있습니다.  
+  
+- url : /api/v1/qna_board
 
 #### - Q&A 게시물 작성
 
@@ -900,7 +905,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 제목, 내용을 입력받고 작성에 성공하면 성공처리를 합니다. 만약 작성에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
 
 - method : **POST**
-- URL : **/qna_board**
+- URL : **/**
 
 ##### Request
 
@@ -1008,7 +1013,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 요청을 보내면 작성일 기준 내림차순으로 게시물 리스트를 반환합니다. 만약 불러오기에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **GET**
-- URL : **qna_board/list**
+- URL : **/list**
 
 ##### Request
 
@@ -1105,7 +1110,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 검색어를 입력받고 요청을 보내면 작성일 기준 내림차순으로 제목에 해당 검색어가 포함된 게시물 리스트를 반환합니다. 만약 불러오기에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **GET**
-- URL : **qna_board/list/{searchWord}**
+- URL : **/list/{searchWord}**
 
 ##### Request
 
@@ -1219,7 +1224,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 Q&A 게시물 번호를 입력받고 요청을 보내면 해당하는 Q&A 게시물 데이터를 반환합니다. 만약 불러오기에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **GET**
-- URL : **qna_board/{qnaBoardNumber}**
+- URL : **/{qnaBoardNumber}**
 
 ##### Request
 
@@ -1669,7 +1674,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 Q&A 게시물 번호, 제목, 내용을 입력받고 수정에 성공하면 성공처리를 합니다. 만약 수정에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
 
 - method : **PUT**
-- URL : **qna_board/{qnaBoardNumber}**
+- URL : **/{qnaBoardNumber}**
 
 ##### Request
 
@@ -1795,6 +1800,14 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
+
+<h2 style='background-color: rgba(55, 55, 55, 0.2); text-align: center'>공지사항 게시판  모듈</h2>
+
+인증 및 인가와 관련된 REST API 모듈  
+게시물 작성, 수정, 삭제 리스트 보기 의 API가 포함되어 있습니다.  
+  
+- url : /api/v1/announcement_board
+
 #### - 공지사항 게시물 작성
 
 ##### 설명
@@ -1802,7 +1815,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 제목, 내용을 입력받고 작성에 성공하면 성공처리를 합니다. 만약 작성에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
 
 - method : **POST**
-- URL : **/announcement_board**
+- URL : **/**
 
 ##### Request
 
@@ -1910,7 +1923,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 요청을 보내면 작성일 기준 내림차순으로 게시물 리스트를 반환합니다. 만약 불러오기에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **GET**
-- URL : **announcement_board/list**
+- URL : **/list**
 
 ##### Request
 
@@ -2005,7 +2018,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 검색어를 입력받고 요청을 보내면 작성일 기준 내림차순으로 제목에 해당 검색어가 포함된 게시물 리스트를 반환합니다. 만약 불러오기에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **GET**
-- URL : **announcement_board/list/{searchWord}**
+- URL : **/list/{searchWord}**
 
 ##### Request
 
@@ -2117,7 +2130,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 공지사항 게시물 번호를 입력받고 요청을 보내면 해당하는 Q&A 게시물 데이터를 반환합니다. 만약 불러오기에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **GET**
-- URL : **announcement_board/{announcementBoardNumber}**
+- URL : **/{announcementBoardNumber}**
 
 ##### Request
 
@@ -2236,7 +2249,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 공지사항 게시물 번호를 입력받고 요청을 보내면 해당하는 공지사항 게시물의 조회수를 증가합니다. 만약 증가에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **PATCH**
-- URL : **announcement_board/{announceMentBoardNumber}/increase-announceMent-view-count**
+- URL : **/{announceMentBoardNumber}/increase-announceMent-view-count**
 
 ##### Request
 
@@ -2340,7 +2353,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 공지사항 게시물 번호를 입력받고 요청을 보내면 해당하는 Q&A 게시물이 삭제됩니다. 만약 삭제에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **DELETE**
-- URL : **announcement_board/{announceMentBoardNumber}**
+- URL : **/`${announceMentBoardNumber}`**
 
 ##### Request
 
@@ -2444,7 +2457,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 공지사항 게시물 번호, 제목, 내용을 입력받고 수정에 성공하면 성공처리를 합니다. 만약 수정에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
 
 - method : **PUT**
-- URL : **announcement_board/{qnaBoardNumber}**
+- URL : **/`${announceBoardNumber}`**
 ##### Request
 
 ###### Header

@@ -229,7 +229,6 @@ Content-Type: application/json;charset=UTF-8
 - method : **GET**  
 - URL : **/list/search**  
 
-
 ##### Request
 
 ###### Header

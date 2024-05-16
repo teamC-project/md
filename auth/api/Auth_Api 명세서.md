@@ -444,7 +444,7 @@ Content-Type: application/json;charset=UTF-8
 
 ##### 설명
 
-클라이언트로부터 고객 | 디자이너 | 관리자는 회원가입시 등록한 이메일을 통해 인증을 받고 아이디를 찾을수 있다.
+클라이언트로부터 고객 | 디자이너 | 관리자는 회원가입시 등록한 이메일을 통해 인증을 받아야 진행할 수 있다.
 만약 잘못된 이메일, 인증번호를 불일치하게 되면 실패처리 됩니다. 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **POST**  
@@ -527,6 +527,78 @@ Content-Type: application/json;charset=UTF-8
 {
   "code": "AF",
   "message": "Authentication Failed."
+}
+```
+
+**응답 : 실패 (데이터베이스 오류)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "DBE",
+  "message": "Database Error."
+}
+```
+
+***
+
+#### - 아이디 찾기 반환 페이지
+
+##### 설명
+
+클라이언트로부터 고객 | 디자이너 | 관리자는 회원가입시 등록한 이메일을 통해 인증을 받고 아이디 반환 페이지에서 아이디를 반환받을 수 있다.
+만약 잘못된 이메일, 인증번호를 불일치하게 되면 실패처리 됩니다. 데이터베이스 에러가 발생할 수 있습니다.
+
+- method : **POST**  
+- URL : **/id_found**  
+
+##### Request
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+
+###### Request Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| userEmail | String | 사용자 이메일 (이메일 형태의 데이터) | O |
+| authNumber | Int | 인증 확인할 인증 번호 | O |
+| type | customer, desginer, admin |  
+
+###### Example
+
+```bash
+curl -v -X POST "http://localhost:4200/api/v1/auth/id_found" \
+ -d "userEmail=email@email.com" \
+ -d "authNumber=0123" 
+```
+
+##### Response
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Content-Type | 반환하는 Response Body의 Content Type (application/json) | O |
+
+###### Response Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| code | String | 응답 코드 | O |
+| message | String | 응답 메시지 | O |
+
+###### Example
+
+**응답 성공**
+```bash
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "SU",
+  "message": "Success."
 }
 ```
 

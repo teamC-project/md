@@ -17,111 +17,6 @@ Auth
 
 ***
 
-#### - 로그인  
-  
-##### 설명
-
-클라이언트로부터 사용자 아이디와 평문의 비밀번호를 입력받고 아이디와 비밀번호가 일치한다면 성공처리가되며 access_token과 해당 토큰의 만료 기간을 반환합니다. 만약 아이디 혹은 비밀번호가 하나라도 틀리다면 실패 처리됩니다. 서버 에러, 데이터베이스 에러, 토큰 생성 에러가 발생할 수 있습니다.
-
-- method : **POST**  
-- URL : **/sign_in**  
-
-##### Request
-
-###### Header
-
-| name | description | required |
-|---|:---:|:---:|
-
-###### Request Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| userId | String | 사용자의 아이디 | O |
-| userPassword | String | 사용자의 비밀번호 | O |
-| type | customer, designer, admin |
-###### Example
-
-```bash
-curl -v -X POST "http://localhost:4200/api/v1/auth/sign-in" \
- -d "userId=service123" \
- -d "userPassword=P!ssw0rd"
-```
-
-##### Response
-
-###### Header
-
-| name | description | required |
-|---|:---:|:---:|
-| Content-Type | 반환하는 Response Body의 Content Type (application/json) | O |
-
-###### Response Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| code | String | 사용자의 아이디 | O |
-| message | String | 사용자의 비밀번호 | O |
-| accessToken | String | 사용자의 아이디 | O |
-| expires | int | 사용자의 비밀번호 | O |
-
-
-###### Example
-
-**응답 성공**
-```bash
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "SU",
-  "message": "Success.",
-  "accessToken": "${ACCESS_TOKEN}",
-  "expires": 3600
-}
-```
-
-**응답 : 실패 (데이터 유효성 검사 실패)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "VF",
-  "message": "Varidation Failed."
-}
-```
-
-**응답 : 실패 (로그인 정보 불일치)**
-```bash
-HTTP/1.1 401 Unauthorized
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "SF",
-  "message": "Sign in Failed."
-}
-```
-
-**응답 : 실패 (토큰 생성 실패)**
-```bash
-HTTP/1.1 500 Internal Server Error
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "TF",
-  "message": "Token creation Failed."
-}
-```
-
-**응답 : 실패 (데이터베이스 오류)**
-```bash
-HTTP/1.1 500 Internal Server Error
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "DBE",
-  "message": "Database Error."
-}
-```
-
-***
-
 #### - 이메일 인증  
   
 ##### 설명
@@ -440,6 +335,111 @@ Content-Type: application/json;charset=UTF-8
 
 ***
 
+#### - 로그인  
+  
+##### 설명
+
+클라이언트로부터 사용자 아이디와 평문의 비밀번호를 입력받고 아이디와 비밀번호가 일치한다면 성공처리가되며 access_token과 해당 토큰의 만료 기간을 반환합니다. 만약 아이디 혹은 비밀번호가 하나라도 틀리다면 실패 처리됩니다. 서버 에러, 데이터베이스 에러, 토큰 생성 에러가 발생할 수 있습니다.
+
+- method : **POST**  
+- URL : **/sign_in**  
+
+##### Request
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+
+###### Request Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| userId | String | 사용자의 아이디 | O |
+| userPassword | String | 사용자의 비밀번호 | O |
+| type | customer, designer, admin |
+###### Example
+
+```bash
+curl -v -X POST "http://localhost:4200/api/v1/auth/sign-in" \
+ -d "userId=service123" \
+ -d "userPassword=P!ssw0rd"
+```
+
+##### Response
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Content-Type | 반환하는 Response Body의 Content Type (application/json) | O |
+
+###### Response Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| code | String | 사용자의 아이디 | O |
+| message | String | 사용자의 비밀번호 | O |
+| accessToken | String | 사용자의 아이디 | O |
+| expires | int | 사용자의 비밀번호 | O |
+
+
+###### Example
+
+**응답 성공**
+```bash
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "SU",
+  "message": "Success.",
+  "accessToken": "${ACCESS_TOKEN}",
+  "expires": 3600
+}
+```
+
+**응답 : 실패 (데이터 유효성 검사 실패)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "VF",
+  "message": "Varidation Failed."
+}
+```
+
+**응답 : 실패 (로그인 정보 불일치)**
+```bash
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "SF",
+  "message": "Sign in Failed."
+}
+```
+
+**응답 : 실패 (토큰 생성 실패)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "TF",
+  "message": "Token creation Failed."
+}
+```
+
+**응답 : 실패 (데이터베이스 오류)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "DBE",
+  "message": "Database Error."
+}
+```
+
+***
+
 #### - 아이디 찾기
 
 ##### 설명
@@ -636,15 +636,12 @@ Content-Type: application/json;charset=UTF-8
 
 ***
 
-#### - 개인정보수정
+#### - 비밀번호 찾기 재설정
   
 ##### 설명
-클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 클라이언트로부터 고객 | 관리자는 아이디를 제외한, 비밀번호, 연령대, 성별의 값을 입력받고 디자이너는 면허증 사진 파일, 업체명을 추가로 입력받습니다. 정상적으로 개인정보 수정이 완료되면 성공처리를 합니다.
-만약 작성에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
-
-
+클라이언트로부터 재설정할 비밀번호를 필수로 입력하여 성공처리 한다. 만약 유효성에 어긋난다면 실패 처리한다. 데이터베이스 오류가 발생할 수 있다.
 - method : **POST**  
-- URL : **/update**  
+- URL : **/password_change**  
 
 ##### Request
 
@@ -652,33 +649,19 @@ Content-Type: application/json;charset=UTF-8
 
 | name | description | required |
 |---|:---:|:---:|
-| Authorization | 인증에 사용될 Bearer 토큰 | O |
 
 ###### Request Body
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| userId | String | 사용자 아이디 | O |
 | userPassword | String | 사용자 비밀번호 (영문+숫자 8~13자) | O |
-| userEmail | String | 사용자 이메일 (이메일 형태의 데이터) | O |
-| authNumber | Int | 인증 확인할 인증 번호 | O |
-| userGender | String | 수정할 성별 | O  |
-| userAge | Int | 수정할 나이 | O |
-| desginerImage | String | X |
-| desginerCompanyName | String | X |
-| type | customer, desginer, admin |  
 
 ###### Example
 
 ```bash
-curl -v -X POST "http://localhost:4200/api/v1/auth/update" \
- -H "Authorization: Bearer {JWT}" \
- -d "userId=service123" \
- -d "userPassword=Pa55w0rd" \
- -d "userEmail=email@email.com" \
- -d "authNumber=0123" \
- -d "userAge":"20" \
- -d "userGender":"male"
+curl -v -X POST "http://localhost:4200/api/v1/auth/password_change" \
+ -d '{"userPassword":"qwe123"}' \
+
 ```
 
 ##### Response
@@ -709,34 +692,14 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-**응답 : 실패 (데이터 유효성 검사 실패)**
+**응답 : 실패 (유효성 검사 실패)**
+
 ```bash
-HTTP/1.1 400 Bad Request
+HTTP/1.1 400 bed request
 Content-Type: application/json;charset=UTF-8
 {
   "code": "VF",
-  "message": "Varidation Failed."
-}
-```
-
-**응답 : 실패 (이메일 인증 실패)**
-```bash
-HTTP/1.1 401 Unauthorized
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "AF",
-  "message": "Authentication Failed."
-}
-```
-
-**응답 : 실패 (인가 실패)**
-
-```bash
-HTTP/1.1 403 Forbidden
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "AF",
-  "message": "Authorization Failed."
+  "message": "Velidation Failed."
 }
 ```
 
@@ -779,86 +742,6 @@ Content-Type: application/json;charset=UTF-8
 ```bash
 curl -v -X POST "http://localhost:4200/api/v1/auth/logout" \
  -H "Authorization: Bearer {JWT}"
-```
-
-##### Response
-
-###### Header
-
-| name | description | required |
-|---|:---:|:---:|
-| Content-Type | 반환하는 Response Body의 Content Type (application/json) | O |
-
-###### Response Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| code | String | 응답 코드 | O |
-| message | String | 응답 메시지 | O |
-
-
-###### Example
-
-**응답 성공**
-```bash
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "SU",
-  "message": "Success."
-}
-```
-
-**응답 : 실패 (인가 실패)**
-
-```bash
-HTTP/1.1 403 Forbidden
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "AF",
-  "message": "Authorization Failed."
-}
-```
-
-**응답 : 실패 (데이터베이스 오류)**
-```bash
-HTTP/1.1 500 Internal Server Error
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "DBE",
-  "message": "Database Error."
-}
-```
-
-***
-
-#### - 회원탈퇴
-  
-##### 설명
-클라이언트로부터 고객의 정보를 영구 삭제한다. 성공 시 고객의 정보는 영구삭제된다.
-에러 시 에러 메시지를 반환 받는다. 데이터베이스 오류가 발생할 수 있다.
-
-- method : **POST**  
-- URL : **/user_delete**  
-
-##### Request
-
-###### Header
-
-| name | description | required |
-|---|:---:|:---:|
-| Authorization | 인증에 사용될 Bearer 토큰 | O |
-
-###### Request Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-
-###### Example
-
-```bash
-curl -v -X POST "http://localhost:4200/api/v1/auth/user_delete" \
- -H "Authorization: Bearer {JWT}" \
 ```
 
 ##### Response
@@ -987,12 +870,17 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-#### - 비밀번호 찾기 재설정
+***
+
+#### - 개인정보수정
   
 ##### 설명
-클라이언트로부터 재설정할 비밀번호를 필수로 입력하여 성공처리 한다. 만약 유효성에 어긋난다면 실패 처리한다. 데이터베이스 오류가 발생할 수 있다.
+클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 클라이언트로부터 고객 | 관리자는 아이디를 제외한, 비밀번호, 연령대, 성별의 값을 입력받고 디자이너는 면허증 사진 파일, 업체명을 추가로 입력받습니다. 정상적으로 개인정보 수정이 완료되면 성공처리를 합니다.
+만약 작성에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
+
+
 - method : **POST**  
-- URL : **/password_change**  
+- URL : **/update**  
 
 ##### Request
 
@@ -1000,19 +888,33 @@ Content-Type: application/json;charset=UTF-8
 
 | name | description | required |
 |---|:---:|:---:|
+| Authorization | 인증에 사용될 Bearer 토큰 | O |
 
 ###### Request Body
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
+| userId | String | 사용자 아이디 | O |
 | userPassword | String | 사용자 비밀번호 (영문+숫자 8~13자) | O |
+| userEmail | String | 사용자 이메일 (이메일 형태의 데이터) | O |
+| authNumber | Int | 인증 확인할 인증 번호 | O |
+| userGender | String | 수정할 성별 | O  |
+| userAge | Int | 수정할 나이 | O |
+| desginerImage | String | X |
+| desginerCompanyName | String | X |
+| type | customer, desginer, admin |  
 
 ###### Example
 
 ```bash
-curl -v -X POST "http://localhost:4200/api/v1/auth/password_change" \
- -d '{"userPassword":"qwe123"}' \
-
+curl -v -X POST "http://localhost:4200/api/v1/auth/update" \
+ -H "Authorization: Bearer {JWT}" \
+ -d "userId=service123" \
+ -d "userPassword=Pa55w0rd" \
+ -d "userEmail=email@email.com" \
+ -d "authNumber=0123" \
+ -d "userAge":"20" \
+ -d "userGender":"male"
 ```
 
 ##### Response
@@ -1043,14 +945,34 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-**응답 : 실패 (유효성 검사 실패)**
-
+**응답 : 실패 (데이터 유효성 검사 실패)**
 ```bash
-HTTP/1.1 400 bed request
+HTTP/1.1 400 Bad Request
 Content-Type: application/json;charset=UTF-8
 {
   "code": "VF",
-  "message": "Velidation Failed."
+  "message": "Varidation Failed."
+}
+```
+
+**응답 : 실패 (이메일 인증 실패)**
+```bash
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "AF",
+  "message": "Authentication Failed."
+}
+```
+
+**응답 : 실패 (인가 실패)**
+
+```bash
+HTTP/1.1 403 Forbidden
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "AF",
+  "message": "Authorization Failed."
 }
 ```
 
@@ -1063,3 +985,84 @@ Content-Type: application/json;charset=UTF-8
   "message": "Database Error."
 }
 ```
+***
+
+#### - 회원탈퇴
+  
+##### 설명
+클라이언트로부터 고객의 정보를 영구 삭제한다. 성공 시 고객의 정보는 영구삭제된다.
+에러 시 에러 메시지를 반환 받는다. 데이터베이스 오류가 발생할 수 있다.
+
+- method : **POST**  
+- URL : **/user_delete**  
+
+##### Request
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Authorization | 인증에 사용될 Bearer 토큰 | O |
+
+###### Request Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+
+###### Example
+
+```bash
+curl -v -X POST "http://localhost:4200/api/v1/auth/user_delete" \
+ -H "Authorization: Bearer {JWT}" \
+```
+
+##### Response
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Content-Type | 반환하는 Response Body의 Content Type (application/json) | O |
+
+###### Response Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| code | String | 응답 코드 | O |
+| message | String | 응답 메시지 | O |
+
+
+###### Example
+
+**응답 성공**
+```bash
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "SU",
+  "message": "Success."
+}
+```
+
+**응답 : 실패 (인가 실패)**
+
+```bash
+HTTP/1.1 403 Forbidden
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "AF",
+  "message": "Authorization Failed."
+}
+```
+
+**응답 : 실패 (데이터베이스 오류)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "DBE",
+  "message": "Database Error."
+}
+```
+
+***

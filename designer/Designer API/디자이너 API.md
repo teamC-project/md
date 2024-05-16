@@ -35,16 +35,16 @@
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| title | String | 디자이너 게시물 제목 | O |
-| contents | String | 디자이너 게시물 내용 | O |
+| designer_board_title | String | 디자이너 게시물 제목 | O |
+| designer_board_contents | String | 디자이너 게시물 내용 | O |
 
 ###### Example
 
 ```bash
 curl -v -X POST "http://localhost:4200/api/v1/designer/board/" \
  -H "Authorization: Bearer {JWT}" \
- -d "title={title}" \
- -d "contents={contents}
+ -d "designer_board_title={designer_board_title}" \
+ -d "designer_board_contents={designer_board_contents}
 ```
 
 ##### Response
@@ -176,11 +176,11 @@ Content-Type: application/json;charset=UTF-8
   "message": "Success.",
   "boardList": [
     {
-      "designer_boardNumber" : 1,
-      "title": "헤어 스타일 추천해주세요", 
-      "writerId": "d***",
-      "writeDatetime": "23.05.5",
-      "viewCount": 15
+      "designer_board_number" : 1,
+      designer_board_"title": "헤어 스타일 추천해주세요", 
+      "designer_board_writerId": "d***",
+      "designer_board_writeDatetime": "23.05.5",
+      "designer_board_viewCount": 15
     }, ...
   ]
 }
@@ -284,11 +284,11 @@ Content-Type: application/json;charset=UTF-8
   "message": "Success.",
   "boardList": [
     {
-      "designer_boardNumber" : 1,
-      "title": "헤어 스타일 추천해주세요", 
-      "writerId": "d***",
-      "writeDatetime": "23.05.5",
-      "viewCount": 15
+      "designer_board_number" : 1,
+      "designer_board_title": "헤어 스타일 추천해주세요", 
+      "designer_board_writerId": "d***",
+      "designer_board_writeDatetime": "23.05.5",
+      "designer_board_viewCount": 15
     }, ...
   ]
 }
@@ -388,13 +388,13 @@ Content-Type: application/json;charset=UTF-8
 {
   "code": "SU",
   "message": "Success.",
-  "receptionNumber": ${receptionNumber},
-  "title": "${title}",
-  "writerId": "${writerId}",
-  "writeDatetime": "${writeDatetime}",
-  "viewCount": ${viewCount},
-  "contents": "${contents}",
-  "comment": "${comment}"
+  "designer_board_number": ${designer_board_number},
+  "designer_board_title": "${designer_board_title}",
+  "designer_board_writerId": "${designer_board_writerId}",
+  "designer_board_writeDatetime": "${designer_board_writeDatetime}",
+  "designer_board_viewCount": ${designer_board_viewCount},
+  "designer_board_contents": "${designer_board_contents}",
+  "designer_board_comment": "${designer_board_comment}"
 }
 ```
 
@@ -568,14 +568,14 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| comment | String | 답글 내용 | O |
+| designer_board_comment | String | 답글 내용 | O |
 
 ###### Example
 
 ```bash
 curl -v -X POST "http://localhost:4200/api/v1/board/`${boardNumber}`/comment" \
  -H "Authorization: Bearer {JWT}" \
- -d "comment={commnet}"
+ -d "designer_board_comment={designer_board_commnet}"
 ```
 
 ##### Response

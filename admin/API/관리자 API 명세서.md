@@ -270,7 +270,7 @@ curl -v -X GET "http://localhost:4200/api/v1/trend_board/list/search?word=${sear
 | name | type | description | required |
 |---|:---:|:---:|:---:|
 | trendBoardNumber | int | 헤어트렌드 게시판 게시글 번호 | O |
-| trendBoardtitle | String | 제목 | O |
+| trendBoardTitle | String | 제목 | O |
 | trendBoardtitleImage | String | 게시글 썸네일 이미지 | O |
 | trendBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
 | trendBoardwriteDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
@@ -378,11 +378,11 @@ curl -v -X GET "http://localhost:4200/api/v1/trend_board/${trend_boardNumber}" \
 | trendBoardNumber | int | 헤어트렌드 게시판 게시글 번호 | O |
 | trendBoardtitle | String | 제목 | O |
 | trendBoardtitleImage | String | 게시글 썸네일 이미지 | O |
-| trendBoardcontents | String | 게시글 내용 | O |
+| trendBoardContents | String | 게시글 내용 | O |
 | trendBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
 | trendBoardwriteDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
 | trendBoardlikeCount | int | 좋아요 | O |
-| trendBoardcomment | int | 좋아요 | O |
+| trendBoardComment | int | 헤어트렌드 게시글 댓글 | O |
 
 ###### Example
 
@@ -447,14 +447,14 @@ Content-Type: application/json;charset=UTF-8
 ***
 
 
-#### - 헤어트렌드 게시물 좋아요 증가  
+#### - 헤어트렌드 게시물 좋아요 
   
 ##### 설명
 
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 게시물 번호를 입력받고 좋아요 버튼을 눌러 요청을 보내면 해당하는 헤어트렌드 게시물의 좋아요 수를 증가합니다. 만약 증가에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **PATCH**  
-- URL : **/`${trend_boardNumber}`/increase_like_count**  
+- URL : **/`${trend_boardNumber}`/like_count**  
 
 ##### Request
 
@@ -858,16 +858,6 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-**응답 : 실패 (답변 완료된 게시물)**
-
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "WC",
-  "message": "Written Comment."
-}
-```
 
 **응답 : 실패 (권한 없음)**
 

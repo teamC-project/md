@@ -35,8 +35,8 @@
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| title | String | 헤어 트렌드 게시물 제목 | O |
-| contents | String | 헤어트렌드 게시물 내용 | O |
+| trendBoardTitle | String | 헤어 트렌드 게시물 제목 | O |
+| trendBoardcontents | String | 헤어트렌드 게시물 내용 | O |
 
 
 
@@ -45,8 +45,8 @@
 ```bash
 curl -v -X POST "http://localhost:4200/api/v1/trend_board/" \
  -H "Authorization: Bearer {JWT}" \
- -d "title={title}" \
- -d "contents={contents}"
+ -d "trendBoardTitle={trendBoardtitle}" \
+ -d "trendBoardContents={trendBoardcontents}"
 ```
 
 ##### Response
@@ -161,11 +161,11 @@ curl -v -X GET "http://localhost:4200/api/v1/trend_board/list" \
 | name | type | description | required |
 |---|:---:|:---:|:---:|
 | trendBoardNumber | int | 헤어트렌드 게시판 게시글 번호 | O |
-| title | String | 제목 | O |
-| titleImage | String | 게시글 썸네일 이미지 | O |
-| trendWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
-| writeDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
-| likeCount | int | 좋아요 | O |
+| trendBoardtitle | String | 제목 | O |
+| trendBoardtitleImage | String | 게시글 썸네일 이미지 | O |
+| trendBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
+| trendBoardwriteDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
+| trendBoardlikeCount | int | 좋아요 | O |
 ###### Example
 
 **응답 성공**
@@ -178,11 +178,11 @@ Content-Type: application/json;charset=UTF-8
   "boardList": [
     {
       "trendBoardNumber " : 1,
-      "title": "요즘 뜨는 헤어 스타일은 이거 입니다.", 
-      "titleImage" : "hairImage01.jpg",
-      "trendWriterId": "d***",
-      "writeDatetime": "23.05.15",
-      "likeCount": 15
+      "trendBoardtitle": "요즘 뜨는 헤어 스타일은 이거 입니다.", 
+      "trendBoardtitleImage" : "hairImage01.jpg",
+      "trendBoardWriterId": "d***",
+      "trendBoardwriteDatetime": "23.05.15",
+      "trendBoardlikeCount": 15
     }, ...
   ]
 }
@@ -270,11 +270,11 @@ curl -v -X GET "http://localhost:4200/api/v1/trend_board/list/search?word=${sear
 | name | type | description | required |
 |---|:---:|:---:|:---:|
 | trendBoardNumber | int | 헤어트렌드 게시판 게시글 번호 | O |
-| title | String | 제목 | O |
-| titleImage | String | 게시글 썸네일 이미지 | O |
-| trendWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
-| writeDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
-| likeCount | int | 좋아요 | O |
+| trendBoardtitle | String | 제목 | O |
+| trendBoardtitleImage | String | 게시글 썸네일 이미지 | O |
+| trendBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
+| trendBoardwriteDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
+| trendBoardlikeCount | int | 좋아요 | O |
 
 ###### Example
 
@@ -288,11 +288,11 @@ Content-Type: application/json;charset=UTF-8
   "boardList": [
     {
       "trendBoardNumber " : 1,
-      "title": "요즘 뜨는 헤어 스타일은 이거 입니다.", 
-      "titleImage" : "hairImage01.jpg",
-      "trendWriterId": "d***",
-      "writeDatetime": "23.05.15",
-      "likeCount": 15
+      "trendBoardtitle": "요즘 뜨는 헤어 스타일은 이거 입니다.", 
+      "trendBoardtitleImage" : "hairImage01.jpg",
+      "trendBoardtrendBoardWriterId": "d***",
+      "trendBoardwriteDatetime": "23.05.15",
+      "trendBoardlikeCount": 15
     }, ...
   ]
 }
@@ -352,7 +352,7 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| trend_boardNumber | int | 헤어트렌드 게시물 번호 | O |
+| trendBoardNumber | int | 헤어트렌드 게시물 번호 | O |
 
 ###### Example
 
@@ -376,13 +376,13 @@ curl -v -X GET "http://localhost:4200/api/v1/trend_board/${trend_boardNumber}" \
 | code | String | 결과 코드 | O |
 | message | String | 결과 메세지 | O |
 | trendBoardNumber | int | 헤어트렌드 게시판 게시글 번호 | O |
-| title | String | 제목 | O |
-| titleImage | String | 게시글 썸네일 이미지 | O |
-| contents | String | 게시글 내용 | O |
-| trendWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
-| writeDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
-| likeCount | int | 좋아요 | O |
-| comment | int | 좋아요 | O |
+| trendBoardtitle | String | 제목 | O |
+| trendBoardtitleImage | String | 게시글 썸네일 이미지 | O |
+| trendBoardcontents | String | 게시글 내용 | O |
+| trendBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
+| trendBoardwriteDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
+| trendBoardlikeCount | int | 좋아요 | O |
+| trendBoardcomment | int | 좋아요 | O |
 
 ###### Example
 
@@ -394,13 +394,13 @@ Content-Type: application/json;charset=UTF-8
   "code": "SU",
   "message": "Success.",
   "trendBoardNumber": ${trendBoardNumber},
-  "title": "${title}",
-  "titleImage": "${titleImage}",
-"contents": "${contents}",
-  "trendWriterId": "${trendWriterId}",
-  "writeDatetime": "${writeDatetime}",
-  "likeCount": ${likeCount},
-  "comment": "${comment}"
+  "trendBoardtitle": "${trendBoardtitle}",
+  "trendBoardtitleImage": "${trendBoardtitleImage}",
+	"trendBoardcontents": "${trendBoardcontents}",
+  "trendBoardWriterId": "${trendBoardWriterId}",
+  "trendBoardwriteDatetime": "${trendBoardwriteDatetime}",
+  "trendBoardlikeCount": ${trendBoardlikeCount},
+  "trendBoardcomment": "${trendBoardcomment}"
 }
 ```
 
@@ -454,7 +454,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 게시물 번호를 입력받고 좋아요 버튼을 눌러 요청을 보내면 해당하는 헤어트렌드 게시물의 좋아요 수를 증가합니다. 만약 증가에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **PATCH**  
-- URL : **/{trend_boardNumber}/increase-like-count**  
+- URL : **/`${trend_boardNumber}`/increase_like_count**  
 
 ##### Request
 
@@ -473,7 +473,7 @@ Content-Type: application/json;charset=UTF-8
 ###### Example
 
 ```bash
-curl -v -X PATCH "http://localhost:4200/api/v1/trend_board/{trend_boardNumber}/increase-like-count$" \
+curl -v -X PATCH "http://localhost:4200/api/v1/trend_board/{trend_boardNumber}/increase_like_count$" \
  -H "Authorization: Bearer {JWT}"
 ```
 
@@ -574,14 +574,14 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| comment | String | 답글 내용 | O |
+| trendBoardcomment | String | 답글 내용 | O |
 
 ###### Example
 
 ```bash
 curl -v -X POST "http://localhost:4200/api/v1/trend_board/${trend_boardNumber}/comment" \
  -H "Authorization: Bearer {JWT}" \
- -d "comment={comment}"
+ -d "trendBoardcomment=`${trendBoardcomment}`"
 ```
 
 ##### Response
@@ -785,16 +785,16 @@ Content-Type: application/json;charset=UTF-8
 
 | name     |  type  | description | required |
 | -------- | :----: | :---------: | :------: |
-| title    | String |  Q&A 제목   |    O     |
-| contents | String |  Q&A 내용   |    O     |
+| trendBoardtitle    | String |  Q&A 제목   |    O     |
+| trendBoardcontents | String |  Q&A 내용   |    O     |
 
 ###### Example
 
 ```bash
 curl -v -X PUT "http://localhost:4200/api/v1/trend_board/{trendBoardNumber}" \
  -H "Authorization: Bearer {JWT}" \
- -d "title={title}" \
- -d "contents={contents}
+ -d "trendBoardtitle"=`${trendBoardtitle}` \
+ -d "contents"=`${trendBoardcontents}`
 ```
 
 ##### Response
@@ -919,16 +919,16 @@ Content-Type: application/json;charset=UTF-8
 
 | name     |  type  | description | required |
 | -------- | :----: | :---------: | :------: |
-| title    | String |  Q&A 제목   |    O     |
-| contents | String |  Q&A 내용   |    O     |
+| qnaBoardTitle    | String |  Q&A 제목   |    O     |
+| qnaBoardContents | String |  Q&A 내용   |    O     |
 
 ###### Example
 
 ```bash
 curl -v -X POST "http://localhost:4200/api/v1/qna_board/" \
  -H "Authorization: Bearer {JWT}" \
- -d "title={title}" \
- -d "contents={contents}
+ -d "qnaBoardTitle"=`${qnaBoardtitle}` \
+ -d "qnaBoardContents"=`${qnaBoardContents}`
 ```
 
 ##### Response
@@ -1050,11 +1050,11 @@ curl -v -X GET "http://localhost:4200/api/v1/qna_board/list" \
 | name | type | description | required |
 |---|:---:|:---:|:---:|
 | qnaBoardNumber | int | 설문 게시판 게시물 번호 | O |
-| status | boolean | 상태 | O |
-| title | String | 제목 | O |
-| qnaWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 \*) | O |
-| writeDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
-| viewCount | int | 조회수 | O |
+| qnaBoardstatus | boolean | 상태 | O |
+| qnaBoardTitle | String | 제목 | O |
+| qnaBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 \*) | O |
+| qnaBoardWriteDateTime | String | 작성일</br>(yy.mm.dd 형태) | O |
+| qnaBoardViewCount | int | 조회수 | O |
 
 ###### Example
 
@@ -1069,11 +1069,11 @@ Content-Type: application/json;charset=UTF-8
   "boardList": [
     {
       "qnaBoardNumber": 1,
-      "status": false,
-      "title": "테스트1",
-      "qnaWriterId": "s******",
-      "writeDatetime": "24.05.15",
-      "viewCount": 13
+      "qnaBoardStatus": false,
+      "qnaBoardTitle": "테스트1",
+      "qnaBoardWriterId": "s******",
+      "qnaBoardWriteDateTime": "24.05.15",
+      "qnaBoardViewCount": 13
     }, ...
   ]
 }
@@ -1153,11 +1153,11 @@ curl -v -X GET "http://localhost:4200/api/v1/qna_board/list/search?=${searchWord
 | name | type | description | required |
 |---|:---:|:---:|:---:|
 | qnaBoardNumber | int | Q&A 게시물 번호 | O |
-| status | boolean | 상태 | O |
-| title | String | 제목 | O |
-| qnaWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 \*) | O |
-| writeDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
-| viewCount | int | 조회수 | O |
+| qnaBoardStatus | boolean | 상태 | O |
+| qnaBoardTitle | String | 제목 | O |
+| qnaBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 \*) | O |
+| qnaBoardWriteDateTime | String | 작성일</br>(yy.mm.dd 형태) | O |
+| qnaBoardViewCount | int | 조회수 | O |
 
 ###### Example
 
@@ -1172,11 +1172,11 @@ Content-Type: application/json;charset=UTF-8
   "boardList": [
     {
       "qnaBoardNumber": 1,
-      "status": false,
-      "title": "테스트1",
-      "qnaWriterId": "s******",
-      "writeDatetime": "24.05.02",
-      "viewCount": 0
+      "qnaBoardStatus": false,
+      "qnaBoardTitle": "테스트1",
+      "qnaBoardWriterId": "s******",
+      "qnaBoardWriteDatetime": "24.05.02",
+      "qnaBoardViewCount": 0
     }, ...
   ]
 }
@@ -1262,13 +1262,13 @@ curl -v -X GET "http://localhost:4200/api/v1/qna_board/${qnaBoardNumber}" \
 | code            | String  |          결과 코드           |    O     |
 | message         | String  |         결과 메세지          |    O     |
 | qnaBoardNumber |   int   |          Q&A 게시물 번호           |    O     |
-| status          | boolean |             상태             |    O     |
-| title           | String  |             제목             |    O     |
-| qnaWriterId        | String  |        작성자 아이디         |    O     |
-| writeDatetime   | String  | 작성일</br>(yyyy.mm.dd 형태) |    O     |
-| viewCount       |   int   |            조회수            |    O     |
-| contents        | String  |             내용             |    O     |
-| comment         | String  |          답글 내용           |    X     |
+| qnaBoardStatus          | boolean |             상태             |    O     |
+| qnaBoardTitle           | String  |             제목             |    O     |
+| qnaBoardWriterId        | String  |        작성자 아이디         |    O     |
+| qnaBoardWriteDateTime   | String  | 작성일</br>(yyyy.mm.dd 형태) |    O     |
+| qnaBoardViewCount       |   int   |            조회수            |    O     |
+| qnaBoardContents        | String  |             내용             |    O     |
+| qnaBoardComment         | String  |          답글 내용           |    X     |
 
 ###### Example
 
@@ -1281,13 +1281,13 @@ Content-Type: application/json;charset=UTF-8
   "code": "SU",
   "message": "Success.",
   "qnaBoardNumber": ${qnaBoardNumber},
-  "status": ${status},
-  "title": "${title}",
-  "qnaWriterId": "${qnaWriterId}",
-  "writeDatetime": "${writeDatetime}",
-  "viewCount": ${viewCount},
-  "contents": "${contents}",
-  "comment": "${comment}"
+	"qnaBoardStatus": ${status},
+  "qnaBoardTitle": "${title}",
+  "qnaBoardWriterId": "${qnaBoardWriterId}",
+  "qnaBoardWriteDatetime": "${writeDatetime}",
+  "qnaBoardViewCount": ${viewCount},
+  "qnaBoardContents": "${contents}",
+  "qnaBoardComment": "${comment}"
 }
 ```
 
@@ -1344,7 +1344,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 Q&A 게시물 번호를 입력받고 요청을 보내면 해당하는 Q&A 게시물의 조회수를 증가합니다. 만약 증가에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **PATCH**
-- URL : **/{qnaBoardNumber}/increase-qna-view-count**
+- URL : **/{qnaBoardNumber}/increase_qna-view_count**
 
 ##### Request
 
@@ -1363,7 +1363,7 @@ Content-Type: application/json;charset=UTF-8
 ###### Example
 
 ```bash
-curl -v -X PATCH "http://localhost:4200/api/v1/qna_board/{qnaBoardNumber}/increase-qnaView-count$" \
+curl -v -X PATCH "http://localhost:4200/api/v1/qna_board/{qnaBoardNumber}/increase_qnaview_count$" \
  -H "Authorization: Bearer {JWT}"
 ```
 
@@ -1468,14 +1468,14 @@ Content-Type: application/json;charset=UTF-8
 
 | name    |  type  | description | required |
 | ------- | :----: | :---------: | :------: |
-| comment | String |  답글 내용  |    O     |
+| qnaBoardComment | String |  답글 내용  |    O     |
 
 ###### Example
 
 ```bash
 curl -v -X POST "http://localhost:4200/api/v1/qna_board/${qnaBoardNumber}/qna_comment" \
  -H "Authorization: Bearer {JWT}" \
- -d "comment={comment}"
+ -d "qnaBoardComment"=`${qnaBoardComment}`
 ```
 
 ##### Response
@@ -1694,16 +1694,16 @@ Content-Type: application/json;charset=UTF-8
 
 | name     |  type  | description | required |
 | -------- | :----: | :---------: | :------: |
-| title    | String |  Q&A 제목   |    O     |
-| contents | String |  Q&A 내용   |    O     |
+| qnaBoardTitle    | String |  Q&A 제목   |    O     |
+| qnaBoardContents | String |  Q&A 내용   |    O     |
 
 ###### Example
 
 ```bash
 curl -v -X PUT "http://localhost:4200/api/v1/qna_board/{qnaBoardNumber}" \
  -H "Authorization: Bearer {JWT}" \
- -d "title={title}" \
- -d "contents={contents}
+ -d "qnaBoardTitle"=`${qnaBoardTitle}` \
+ -d "qnaBoardContents=`${qnaBoardContents}`
 ```
 
 ##### Response
@@ -1954,16 +1954,16 @@ curl -v -X GET "http://localhost:4200/api/v1/announcement_board/list" \
 | --------- | :-------------: | :---------------: | :------: |
 | code      |     String      |     결과 코드     |    O     |
 | message   |     String      |    결과 메세지    |    O     |
-| announceBoardList | announceBoardListItem[] | 공지사항 게시물 리스트 |    O     |
+| announceMentBoardList | announceMentBoardListItem[] | 공지사항 게시물 리스트 |    O     |
 
 **announcementBoardListItem**
 | name | type | description | required |
 |---|:---:|:---:|:---:|
 | announceMentBoardNumber | int | 공지사항 게시물 번호 | O |
-| title | String | 제목 | O |
-| announceMentWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 \*) | O |
-| writeDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
-| viewCount | int | 조회수 | O |
+| announceMentBoardTitle | String | 제목 | O |
+| announceMentBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 \*) | O |
+| announceMentBoardWriteDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
+| announceMentBoardViewCount | int | 조회수 | O |
 
 ###### Example
 
@@ -1978,10 +1978,10 @@ Content-Type: application/json;charset=UTF-8
   "boardList": [
     {
       "announceMentBoardNumber": 1,
-      "title": "테스트1",
-      "announceMentWriterId": "s******",
-      "writeDatetime": "24.05.15",
-      "viewCount": 13
+      "announceMentBoardTitle": "테스트1",
+      "announceMentBoardWriterId": "s******",
+      "announceMentBoardWriteDatetime": "24.05.15",
+      "announceMentBoardViewCount": 13
     }, ...
   ]
 }
@@ -2061,10 +2061,10 @@ curl -v -X GET "http://localhost:4200/api/v1/announcement_board/list/search?word
 | name | type | description | required |
 |---|:---:|:---:|:---:|
 | announceMentBoardNumber | int | 공지사항 게시물 번호 | O |
-| title | String | 제목 | O |
-| announceMentWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 \*) | O |
-| writeDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
-| viewCount | int | 조회수 | O |
+| announceMentBoardTitle | String | 제목 | O |
+| announceMentBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 \*) | O |
+| announceMentBoardWriteDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
+| announceMentBoardViewCount | int | 조회수 | O |
 
 ###### Example
 
@@ -2079,10 +2079,10 @@ Content-Type: application/json;charset=UTF-8
   "boardList": [
     {
       "announceMentBoardNumber": 1,
-      "title": "테스트1",
-      "qnaWriterId": "s******",
-      "writeDatetime": "24.05.02",
-      "viewCount": 0
+      "announceMentBoardTitle": "테스트1",
+      "announceMentBoardWriterId": "s******",
+      "announceMentBoardWriteDateTime": "24.05.02",
+      "announceMentBoardViewCount": 0
     }, ...
   ]
 }
@@ -2144,7 +2144,7 @@ Content-Type: application/json;charset=UTF-8
 
 | name            | type | description | required |
 | --------------- | :--: | :---------: | :------: |
-| qnaBoardNumber | int  |  Q&A 게시물 번호  |    O     |
+| announceMentBoardNumber | int  |  공지사항 게시물 번호  |    O     |
 
 ###### Example
 
@@ -2168,12 +2168,12 @@ curl -v -X GET "http://localhost:4200/api/v1/announcement_board/${announceMentBo
 | code            | String  |          결과 코드           |    O     |
 | message         | String  |         결과 메세지          |    O     |
 | announceMentBoardNumber |   int   |         공지사항 게시물 번호           |    O     |
-| title           | String  |             제목             |    O     |
-| announceMentWriterId        | String  |        작성자 아이디         |    O     |
-| writeDatetime   | String  | 작성일</br>(yyyy.mm.dd 형태) |    O     |
-| viewCount       |   int   |            조회수            |    O     |
-| contents        | String  |             내용             |    O     |
-| comment         | String  |          답글 내용           |    X     |
+| announceMentBoardTitle           | String  |             제목             |    O     |
+| announceMentBoardWriterId        | String  |        작성자 아이디         |    O     |
+| announceMentBoardWriteDatetime   | String  | 작성일</br>(yyyy.mm.dd 형태) |    O     |
+| announceMentBoardViewCount       |   int   |            조회수            |    O     |
+| announceMentBoardContents        | String  |             내용             |    O     |
+| announceMentBoardComment         | String  |          답글 내용           |    X     |
 
 ###### Example
 
@@ -2185,14 +2185,14 @@ Content-Type: application/json;charset=UTF-8
 {
   "code": "SU",
   "message": "Success.",
-  "qnaBoardNumber": ${qnaBoardNumber},
-  "status": ${status},
-  "title": "${title}",
-  "qnaWriterId": "${qnaWriterId}",
-  "writeDatetime": "${writeDatetime}",
-  "viewCount": ${viewCount},
-  "contents": "${contents}",
-  "comment": "${comment}"
+  "announceMentBoardBoardNumber": ${announceMentBoardBoardNumber},
+  "announceMentBoardStatus": ${status},
+  "announceMentBoardTitle": "${title}",
+  "announceMentBoardQnaBoardWriterId": "${qnaBoardWriterId}",
+  "announceMentBoardWriteDateTime": "${writeDatetime}",
+  "announceMentBoardViewCount": ${viewCount},
+  "announceMentBoardContents": "${contents}",
+  "announceMentBoardComment": "${comment}"
 }
 ```
 
@@ -2249,7 +2249,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 공지사항 게시물 번호를 입력받고 요청을 보내면 해당하는 공지사항 게시물의 조회수를 증가합니다. 만약 증가에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **PATCH**
-- URL : **/{announceMentBoardNumber}/increase-announceMent-view-count**
+- URL : **/{announceMentBoardNumber}/increase_announcement_view_count**
 
 ##### Request
 
@@ -2268,7 +2268,7 @@ Content-Type: application/json;charset=UTF-8
 ###### Example
 
 ```bash
-curl -v -X PATCH "http://localhost:4200/api/v1/announcement_board/${announceMentBoardNumber}/increase-announceMentView-count$" \
+curl -v -X PATCH "http://localhost:4200/api/v1/announcement_board/${announceMentBoardNumber}/increase_announceMentView_count$" \
  -H "Authorization: Bearer {JWT}"
 ```
 
@@ -2372,7 +2372,7 @@ Content-Type: application/json;charset=UTF-8
 ###### Example
 
 ```bash
-curl -v -X POST "http://localhost:4200/api/v1/qna_board/${qnaBoardNumber}" \
+curl -v -X POST "http://localhost:4200/api/v1/announcement_board/${announceMentBoardBoardNumber}" \
  -H "Authorization: Bearer {JWT}"
 ```
 
@@ -2457,7 +2457,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 공지사항 게시물 번호, 제목, 내용을 입력받고 수정에 성공하면 성공처리를 합니다. 만약 수정에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
 
 - method : **PUT**
-- URL : **/`${announceBoardNumber}`**
+- URL : **/`${announceMentBoardNumber}`**
 ##### Request
 
 ###### Header
@@ -2484,8 +2484,8 @@ Content-Type: application/json;charset=UTF-8
 ```bash
 curl -v -X PUT "http://localhost:4200/api/v1/qna_board/{qnaBoardNumber}" \
  -H "Authorization: Bearer {JWT}" \
- -d "title={title}" \
- -d "contents={contents}
+ -d "announceMentBoardTitle"=`${announceMentBoardTitle}` \
+ -d "announceMentBoardContents"=`${announceMentBoardContents}`
 ```
 
 ##### Response

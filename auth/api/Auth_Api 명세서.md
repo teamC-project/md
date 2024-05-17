@@ -171,6 +171,7 @@ curl -v -X POST "http://localhost:4200/api/v1/auth/email-auth-check" \
 
 ###### Example
 
+
 **응답 성공**
 ```bash
 HTTP/1.1 200 OK

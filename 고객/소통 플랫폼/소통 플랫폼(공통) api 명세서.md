@@ -1,4 +1,4 @@
-소통 플랫폼(공통)api 명세서 0.3v
+소통 플랫폼(공통)api 명세서 0.4v
 <h1 style='background-color: rgba(55, 55, 55, 0.4); text-align: center'>API 명세서</h1>
 
 해당 API 명세서는 '소통플랫폼(공통)'의 REST API를 명세하고 있습니다.
@@ -10,7 +10,7 @@
 <h2 style='background-color: rgba(55, 55, 55, 0.2); text-align: center'>소통 플랫폼 모듈</h2>
 
 인증 및 인가와 관련된 REST API 모듈
-게시물 작성, 수정, 삭제, 리스트 보기 등의 REST API가 포함되어 있습니다.
+게시물 리스트보기, 검색, 답글 작성, 삭제, 수정 등의 REST API가 포함되어 있습니다.
 
 - url: /api/v1/customer_board
 

@@ -44,7 +44,11 @@
 curl -v -X POST "http://localhost:4200/api/v1/designer/board/" \
  -H "Authorization: Bearer {JWT}" \
  -d "designerBoardTitle={designerBoardTitle}" \
+<<<<<<< HEAD
  -d "designer_board_contents={designeBboardContents}
+=======
+ -d "designerBoardContents={designeBboardContents}
+>>>>>>> 89c6bedaacfe4141b5e0eff0259daaad5462560b
 ```
 
 ##### Response
@@ -154,16 +158,22 @@ curl -v -X GET "http://localhost:4200/api/v1/designer/board/list" \
 |---|:---:|:---:|:---:|
 | code | String | 결과 코드 | O |
 | message | String | 결과 메세지 | O |
-| designer_boardList | designer_boardListItem[] | 디자이너 게시물 리스트 | O |
+| designerBoardList | designerBoardListItem[] | 디자이너 게시물 리스트 | O |
 
 **designBoardListItem**
 | name | type | description | required |
 |---|:---:|:---:|:---:|
 | designerBoardNumber | int | 디자이너 게시글 번호 | O |
 | designerBoardTitle | String | 제목 | O |
+<<<<<<< HEAD
 | designerBoard_writerId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
 | designer_board_writeDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
 | designer_board_viewCount | int | 조회수 | O |
+=======
+| designerBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
+| designerBoardWriteDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
+| designerBoardViewCount | int | 조회수 | O |
+>>>>>>> 89c6bedaacfe4141b5e0eff0259daaad5462560b
 
 ###### Example
 
@@ -176,11 +186,11 @@ Content-Type: application/json;charset=UTF-8
   "message": "Success.",
   "boardList": [
     {
-      "designer_board_number" : 1,
-      designer_board_"title": "헤어 스타일 추천해주세요", 
-      "designer_board_writerId": "d***",
-      "designer_board_writeDatetime": "23.05.5",
-      "designer_board_viewCount": 15
+      "designerBoardNumber" : 1,
+      designerBoard"title": "헤어 스타일 추천해주세요", 
+      "designerBoardWriterId": "d***",
+      "designerBoardWriteDatetime": "23.05.5",
+      "designerBoardViewCount": 15
     }, ...
   ]
 }
@@ -262,16 +272,16 @@ curl -v -X GET "http://localhost:4200/api/v1/designer/board/list/search?word=${s
 |---|:---:|:---:|:---:|
 | code | String | 결과 코드 | O |
 | message | String | 결과 메세지 | O |
-| designer_boardList | designer_boardListItem[] | 디자이너 게시물 리스트 | O |
+| designerBoardList | designerBoardListItem[] | 디자이너 게시물 리스트 | O |
 
 **designerBoardListItem**
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| designer_board_number | int | 게시물 번호 | O |
-| designer_board_title | String | 제목 | O |
-| designer_board_writerId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
-| designer_board_writeDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
-| designer_board_viewCount | int | 조회수 | O |
+| designerBoardNumber | int | 게시물 번호 | O |
+| designerBoardTitle | String | 제목 | O |
+| designerBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
+| designerBoardWriteDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
+| designerBoardViewCount | int | 조회수 | O |
 
 ###### Example
 
@@ -284,11 +294,11 @@ Content-Type: application/json;charset=UTF-8
   "message": "Success.",
   "boardList": [
     {
-      "designer_board_number" : 1,
-      "designer_board_title": "헤어 스타일 추천해주세요", 
-      "designer_board_writerId": "d***",
-      "designer_board_writeDatetime": "23.05.5",
-      "designer_board_viewCount": 15
+      "designerBoardNumber" : 1,
+      "designerBoardTitle": "헤어 스타일 추천해주세요", 
+      "designerBoardWriterId": "d***",
+      "designerBoardWriteDatetime": "23.05.5",
+      "designerBoardViewCount": 15
     }, ...
   ]
 }
@@ -348,7 +358,7 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| designer_board_Number | int | 게시물 번호 | O |
+| designerBoardNumber | int | 게시물 번호 | O |
 
 ###### Example
 
@@ -371,13 +381,13 @@ curl -v -X GET "http://localhost:4200/api/v1/designer/board/`${boardNumber}`" \
 |---|:---:|:---:|:---:|
 | code | String | 결과 코드 | O |
 | message | String | 결과 메세지 | O |
-| designer_board_number | int | 게시물 번호 | O |
-| designer_board_title | String | 제목 | O |
-| designer_board_writerId | String | 작성자 아이디 | O |
-| designer_board_writeDatetime | String | 작성일</br>(yyyy.mm.dd 형태) | O |
-| designer_board_viewCount | int | 조회수 | O |
-| designer_board_contents | String | 내용 | O |
-| designer_board_comment | String | 답글 내용 | X |
+| designerBoardNumber | int | 게시물 번호 | O |
+| designerBoardTitle | String | 제목 | O |
+| designerBoardWriterId | String | 작성자 아이디 | O |
+| designerBoardWriteDatetime | String | 작성일</br>(yyyy.mm.dd 형태) | O |
+| designerBoardViewCount | int | 조회수 | O |
+| designerBoardContents | String | 내용 | O |
+| designerBoardComment | String | 답글 내용 | X |
 
 ###### Example
 
@@ -388,13 +398,13 @@ Content-Type: application/json;charset=UTF-8
 {
   "code": "SU",
   "message": "Success.",
-  "designer_board_number": ${designer_board_number},
-  "designer_board_title": "${designer_board_title}",
-  "designer_board_writerId": "${designer_board_writerId}",
-  "designer_board_writeDatetime": "${designer_board_writeDatetime}",
-  "designer_board_viewCount": ${designer_board_viewCount},
-  "designer_board_contents": "${designer_board_contents}",
-  "designer_board_comment": "${designer_board_comment}"
+  "designerBoardNumber": ${designerBoardNumber},
+  "designerBoardTitle": "${designerBoardTitle}",
+  "designerBoardWriterId": "${designerBoardWriterId}",
+  "designerBoardWriteDatetime": "${designerBoardWriteDatetime}",
+  "designerBoardViewCount": ${designerBoardViewCount},
+  "designerBoardContents": "${designerBoardContents}",
+  "designerBoardComment": "${designerBoardComment}"
 }
 ```
 
@@ -462,7 +472,7 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| designer_board_number | int | 게시물 번호 | O |
+| designerBoardNumber | int | 게시물 번호 | O |
 
 ###### Example
 
@@ -545,7 +555,7 @@ Content-Type: application/json;charset=UTF-8
   
 ##### 설명
 
-클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 게시물번호와 답글 내용을 입력받고 요청을 보내면 해당하는 디자이너 게시물의 답글이 작성됩니다. 만약 증가에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
+클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 게시물번호와 작성자, 답글 내용, 작성일을 입력받고 요청을 보내면 해당하는 디자이너 게시물의 답글이 작성됩니다. 만약 증가에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **POST**  
 - URL : **/board/`${boardNumber}`/comment**  
@@ -577,9 +587,9 @@ Content-Type: application/json;charset=UTF-8
 ```bash
 curl -v -X POST "http://localhost:4200/api/v1/board/`${boardNumber}`/comment" \
  -H "Authorization: Bearer {JWT}" \
- -d "designer_board_comment_contents={designer_board_commnet_contents}"
- -d "designer_board_comment_contents={designer_board_commnet_contents}"
- -d "designer_board_comment_contents={designer_board_commnet_contents}"
+ -d "designerBoardCommentWriterId={designerBoardCommnetWriterId}"
+ -d "designerBoardCommentContents={designerBoardCommnetContents}"
+ -d "designerBoardCommentWriteDatetime={designerBoardCommnetWriteDatetime}"
 ```
 
 ##### Response
@@ -652,6 +662,235 @@ Content-Type: application/json;charset=UTF-8
 
 ***
 
+#### - 디자이너  게시물 답글  수정
+
+##### 설명
+
+클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 디자이너 게시판 게시물 번호,  작성자, 답글 내용, 작성일을 입력받고 수정에 성공하면 성공처리를 합니다. 만약 수정에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
+
+- method : **PUT**
+- URL : **/board/`${boardNumber}`/comment**
+
+##### Request
+
+###### Header
+
+| name          |        description        | required |
+| ------------- | :-----------------------: | :------: |
+| Authorization | 인증에 사용될 Bearer 토큰 |    O     |
+
+###### Path Variable
+
+| name            | type |   description    | required |
+| --------------- | :--: | :--------------: | :------: |
+| designerBoardNumber | int  | 디자이너 게시물 번호 |    O     |
+
+###### Request Body
+
+| name     |  type  | description | required |
+| -------- | :----: | :---------: | :------: |
+| designerBoardCommentWriterId | String | 답글 작성자 | O |
+| designerBoardCommentContents | String | 답글 내용 | O |
+| designerBoardCommentWriteDatetime | String | 답글 작성일</br>(yy.mm.dd 형태) | O |
+
+###### Example
+
+```bash
+curl -v -X PUT "http://localhost:4200/api/v1/designer/board/`${boardNumber}`/comment" \
+ -H "Authorization: Bearer {JWT}" \
+ -d "designerBoardCommentWriterId={designerBoardCommnetWriterId}"
+ -d "designerBoardCommentContents={designerBoardCommnetContents}"
+ -d "designerBoardCommentWriteDatetime={designerBoardCommnetWriteDatetime}"
+```
+
+##### Response
+
+###### Header
+
+| name         |                       description                        | required |
+| ------------ | :------------------------------------------------------: | :------: |
+| Content-Type | 반환하는 Response Body의 Content Type (application/json) |    O     |
+
+###### Response Body
+
+| name    |  type  | description | required |
+| ------- | :----: | :---------: | :------: |
+| code    | String |  결과 코드  |    O     |
+| message | String | 결과 메세지 |    O     |
+
+###### Example
+
+**응답 성공**
+
+```bash
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "SU",
+  "message": "Success.",
+}
+```
+
+**응답 : 실패 (데이터 유효성 검사 실패)**
+
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "VF",
+  "message": "Validation Failed."
+}
+```
+
+**응답 : 실패 (인가 실패)**
+
+```bash
+HTTP/1.1 403 Forbidden
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "AF",
+  "message": "Authorization Failed."
+}
+```
+
+**응답 : 실패 (존재하지 않는 게시물)**
+
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "NB",
+  "message": "No Exist Board."
+}
+```
+
+
+**응답 : 실패 (권한 없음)**
+
+```bash
+HTTP/1.1 403 Forbidden
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "AF",
+  "message": "Authorization Failed."
+}
+```
+
+**응답 : 실패 (데이터베이스 오류)**
+
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "DBE",
+  "message": "Database Error."
+}
+```
+
+
+***
+
+
+#### - 디자이너 게시물 답글 삭제  
+  
+##### 설명
+
+클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 게시물번호를 입력받고 요청을 보내면 해당하는 디자이너 게시물의 답글이 삭제됩니다. 만약 삭제에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
+
+- method : **DELETE**  
+- URL : **/board/`${boardNumber}`/comment**  
+
+##### Request
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Authorization | 인증에 사용될 Bearer 토큰 | O |
+
+###### Path Variable
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| designerBoardNumber | int | 게시물 번호 | O |
+
+###### Example
+
+```bash
+curl -v -X POST "http://localhost:4000/api/v1/designer/board/`${boardNumber}`/comment" \
+ -H "Authorization: Bearer {JWT}"
+```
+
+##### Response
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Content-Type | 반환하는 Response Body의 Content Type (application/json) | O |
+
+###### Response Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| code | String | 결과 코드 | O |
+| message | String | 결과 메세지 | O |
+
+###### Example
+
+**응답 성공**
+```bash
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "SU",
+  "message": "Success."
+}
+```
+
+**응답 : 실패 (데이터 유효성 검사 실패)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "VF",
+  "message": "Validation Failed."
+}
+```
+
+**응답 : 실패 (존재하지 않는 게시물)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "NB",
+  "message": "No Exist Board."
+}
+```
+
+**응답 : 실패 (인가 실패)**
+```bash
+HTTP/1.1 403 Forbidden
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "AF",
+  "message": "Authorization Failed."
+}
+```
+
+**응답 : 실패 (데이터베이스 오류)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "DBE",
+  "message": "Database Error."
+}
+```
+
+***
+
+
 #### - 디자이너  게시물  수정
 
 ##### 설명
@@ -673,22 +912,22 @@ Content-Type: application/json;charset=UTF-8
 
 | name            | type |   description    | required |
 | --------------- | :--: | :--------------: | :------: |
-| designer_board_number | int  | 디자이너 게시물 번호 |    O     |
+| designerBoardNumber | int  | 디자이너 게시물 번호 |    O     |
 
 ###### Request Body
 
 | name     |  type  | description | required |
 | -------- | :----: | :---------: | :------: |
-| designer_board_title    | String |  게시물 제목   |    O     |
-| designer_board_contents | String |  게시물 내용   |    O     |
+| designerBoardTitle    | String |  게시물 제목   |    O     |
+| designerBoardContents | String |  게시물 내용   |    O     |
 
 ###### Example
 
 ```bash
 curl -v -X PUT "http://localhost:4200/api/v1/designer/board/`${boardNumber}`" \
  -H "Authorization: Bearer {JWT}" \
- -d "designer_board_title={designer_board_title}" \
- -d "designer_board_contents={designer_board_contents}
+ -d "designerBoardTitle={designerBoardTitle}" \
+ -d "designerBoardContents={designerBoardContents}
 ```
 
 ##### Response
@@ -799,7 +1038,7 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| designer_board_number | int | 게시물 번호 | O |
+| designerBoardNumber | int | 게시물 번호 | O |
 
 ###### Example
 

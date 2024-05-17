@@ -470,7 +470,7 @@ Content-Type: application/json;charset=UTF-8
 ###### Example
 
 ```bash
-curl -v -X PATCH "http://localhost:4200/api/v1/trend_board/`${trendBoardNumber}`/increase_like_count$" \
+curl -v -X PATCH "http://localhost:4200/api/v1/trend_board/`${trendBoardNumber}`/like_count$" \
  -H "Authorization: Bearer {JWT}"
 ```
 

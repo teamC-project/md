@@ -171,6 +171,7 @@ curl -v -X POST "http://localhost:4200/api/v1/auth/email-auth-check" \
 
 ###### Example
 
+
 **응답 성공**
 ```bash
 HTTP/1.1 200 OK
@@ -252,7 +253,7 @@ curl -v -X POST "http://localhost:4200/api/v1/auth/sign_up" \
  -d "userPassword=Pa55w0rd" \
  -d "userEmail=email@email.com" \
  -d "authNumber=0123"  \
- -d  "userAge":"20" \
+ -d "userAge":"20" \
  -d "userGender":"male"
 ```
 
@@ -448,7 +449,7 @@ Content-Type: application/json;charset=UTF-8
 만약 잘못된 이메일, 인증번호를 불일치하게 되면 실패처리 됩니다. 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **POST**  
-- URL : **/found**  
+- URL : **/id_found**  
 
 ##### Request
 
@@ -468,7 +469,7 @@ Content-Type: application/json;charset=UTF-8
 ###### Example
 
 ```bash
-curl -v -X POST "http://localhost:4200/api/v1/auth/found" \
+curl -v -X POST "http://localhost:4200/api/v1/auth/id_found" \
  -d "userEmail=email@email.com" \
  -d "authNumber=0123"
 ```
@@ -542,15 +543,15 @@ Content-Type: application/json;charset=UTF-8
 
 ***
 
-#### - 아이디 찾기 반환 페이지
+#### - 아이디 찾기 확인
 
 ##### 설명
 
 클라이언트로부터 고객 | 디자이너 | 관리자는 회원가입시 등록한 이메일을 통해 인증을 받고 아이디 반환 페이지에서 아이디를 반환받을 수 있다.
 만약 잘못된 이메일, 인증번호를 불일치하게 되면 실패처리 됩니다. 데이터베이스 에러가 발생할 수 있습니다.
 
-- method : **POST**  
-- URL : **/id_found**  
+- method : **GET**  
+- URL : **/id_found_value**
 
 ##### Request
 
@@ -563,16 +564,13 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| userEmail | String | 사용자 이메일 (이메일 형태의 데이터) | O |
-| authNumber | Int | 인증 확인할 인증 번호 | O |
 | type | customer, desginer, admin |  
 
 ###### Example
 
 ```bash
-curl -v -X POST "http://localhost:4200/api/v1/auth/id_found" \
- -d "userEmail=email@email.com" \
- -d "authNumber=0123" 
+curl -v -X POST "http://localhost:4200/api/v1/auth/id_found_value" \
+ -d "userId=service123" \
 ```
 
 ##### Response
@@ -589,6 +587,7 @@ curl -v -X POST "http://localhost:4200/api/v1/auth/id_found" \
 |---|:---:|:---:|:---:|
 | code | String | 응답 코드 | O |
 | message | String | 응답 메시지 | O |
+| userId | String | 사용자 아이디 | O |
 
 ###### Example
 
@@ -598,7 +597,8 @@ HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
 {
   "code": "SU",
-  "message": "Success."
+  "message": "Success.", 
+  "userId": "service123"
 }
 ```
 

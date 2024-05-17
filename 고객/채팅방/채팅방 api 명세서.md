@@ -1,14 +1,18 @@
-채팅창 api 명세서 0.1v
+채팅방 api 명세서 0.4v
 <h1 style='background-color: rgba(55, 55, 55, 0.4); text-align: center'>API 명세서</h1>
-채팅방 관련 REST API 명세서입니다.
 
-Domain: http://localhost:4200
+해당 API 명세서는 '(채팅방)'의 REST API를 명세하고 있습니다.
 
+-Domain: http://localhost:4200
+
+***
 
 <h2 style='background-color: rgba(55, 55, 55, 0.2); text-align: center'>채팅방 모듈</h2>
-채팅방 개설, 조회, 메시지 작성, 신고, 삭제, 관리와 관련된 REST API 모듈입니다.
 
-url: /api/v1/chat-rooms
+인증 및 인가와 관련된 REST API 모듈
+채팅방 개설, 메세지 보내기, 채팅방 나가기, 채팅방 목록 관리 등의 REST API가 포함되어 있습니다.
+
+- url: /api/v1/
 
 
 - 채팅방 개설

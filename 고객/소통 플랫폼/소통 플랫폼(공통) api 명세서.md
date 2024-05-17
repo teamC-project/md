@@ -545,155 +545,228 @@ Content-Type: application/json;charset=UTF-8
 ***
 
 
-### - 댓글 수정
+#### - 소통 플랫폼 게시물 답글 수정
 
-설명
-기존 댓글을 수정합니다. 작성자만 수정 가능합니다.
+##### 설명
 
-#### method: PUT
-#### URL: /api/v1/customer_board_comments/{id}
+클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 소통 플랫폼 게시판 게시물 번호,  작성자, 답글 내용, 작성일을 입력받고 수정에 성공하면 성공처리를 합니다. 만약 수정에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
+
+- method : **PUT**
+- URL : **/`${customerBoardNumber}`/comment**
+
 ##### Request
 
-##### Path Variables
+###### Header
 
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| id | Integer | 댓글 ID | O |
+| name          |        description        | required |
+| ------------- | :-----------------------: | :------: |
+| Authorization | 인증에 사용될 Bearer 토큰 |    O     |
 
-##### Header
+###### Path Variable
 
-| name | description | required |
-|---|:---:|:---:|
-| Content-Type | application/json | O |
+| name            | type |   description    | required |
+| --------------- | :--: | :--------------: | :------: |
+| customerBoardNumber | int  | 소통 플랫폼 게시물 번호 |    O     |
 
-##### Request Body
+###### Request Body
 
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| contents | String | 수정할 댓글 내용 | O |
+| name     |  type  | description | required |
+| -------- | :----: | :---------: | :------: |
+| customerBoardCommentWriterId | String | 답글 작성자 | O |
+| customerBoardCommentContents | String | 답글 내용 | O |
+| customerBoardCommentWriteDatetime | String | 답글 작성일</br>(yy.mm.dd 형태) | O |
 
-##### Example
+###### Example
 
 ```bash
-curl -X PUT "http://localhost:4200/api/v1/customer_board_comments/1" \
--H "Content-Type: application/json" \
--d '{
-  "contents": "수정된 댓글 내용"
-}'
+curl -v -X PUT "http://localhost:4200/api/v1/customer_board/`${customerBoardNumber}`/comment" \
+ -H "Authorization: Bearer {JWT}" \
+ -d "customerBoardCommentWriterId"=`${customerBoardCommnetWriterId}`
+ -d "customerBoardCommentContents"=`${customerBoardCommnetContents}`
+ -d "customerBoardCommentWriteDatetime"=`${customerBoardCommnetWriteDatetime}`
+```
 
 ##### Response
 
-##### Header
+###### Header
 
-| name | description | required |
-|---|:---:|:---:|
-| Content-Type | application/json | O |
+| name         |                       description                        | required |
+| ------------ | :------------------------------------------------------: | :------: |
+| Content-Type | 반환하는 Response Body의 Content Type (application/json) |    O     |
 
-##### Response Body
+###### Response Body
 
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| id | Integer | 수정된 댓글 ID | O |
+| name    |  type  | description | required |
+| ------- | :----: | :---------: | :------: |
+| code    | String |  결과 코드  |    O     |
+| message | String | 결과 메세지 |    O     |
 
-##### Example
+###### Example
 
-json
+**응답 성공**
+
+```bash
 HTTP/1.1 200 OK
-Content-Type: application/json
+Content-Type: application/json;charset=UTF-8
 {
-  "id": 1
+  "code": "SU",
+  "message": "Success.",
 }
+```
 
-### - 댓글 삭제
+**응답 : 실패 (데이터 유효성 검사 실패)**
 
-설명
-기존 댓글을 삭제합니다. 작성자만 삭제 가능합니다.
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "VF",
+  "message": "Validation Failed."
+}
+```
 
-#### method: DELETE
-#### URL: /api/v1/customer_board_comments/{id}
+**응답 : 실패 (인가 실패)**
+
+```bash
+HTTP/1.1 403 Forbidden
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "AF",
+  "message": "Authorization Failed."
+}
+```
+
+**응답 : 실패 (존재하지 않는 게시물)**
+
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "NB",
+  "message": "No Exist Board."
+}
+```
+
+
+**응답 : 실패 (권한 없음)**
+
+```bash
+HTTP/1.1 403 Forbidden
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "AF",
+  "message": "Authorization Failed."
+}
+```
+
+**응답 : 실패 (데이터베이스 오류)**
+
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "DBE",
+  "message": "Database Error."
+}
+```
+
+
+***
+
+
+#### - 소통 플랫폼 게시물 답글 삭제  
+  
+##### 설명
+
+클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 게시물 번호를 입력받고 요청을 보내면 해당하는 소통 플랫폼 게시물의 답글이 삭제됩니다. 만약 삭제에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
+
+- method : **DELETE**  
+- URL : **/`${customerBoardNumber}`/comment**  
 
 ##### Request
 
-##### Path Variables
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Authorization | 인증에 사용될 Bearer 토큰 | O |
+
+###### Path Variable
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| id | Integer | 댓글 ID | O |
+| customerBoardNumber | int | 게시물 번호 | O |
 
-##### Example
+###### Example
 
 ```bash
-curl -X DELETE "http://localhost:4200/api/v1/customer_board_comments/1"
+curl -v -X DELETE "http://localhost:4000/api/v1/customer_board/`${customerBoardNumber}`/comment" \
+ -H "Authorization: Bearer {JWT}"
+```
 
 ##### Response
 
-##### Header
+###### Header
 
 | name | description | required |
 |---|:---:|:---:|
+| Content-Type | 반환하는 Response Body의 Content Type (application/json) | O |
 
-##### Example
-
-HTTP/1.1 204 No Content
-
-<h2 style='background-color: rgba(55, 55, 55, 0.2); text-align: center'>신고 모듈</h2>
-댓글 신고와 관련된 REST API 모듈입니다.
-
-url: /api/v1/customer_board_comment_reports
-
-
-### - 댓글 신고
-
-설명
-댓글을 신고합니다. 로그인한 사용자만 신고 가능합니다.
-
-#### method: POST
-#### URL: /api/v1/customer_board_comment_reports
-
-##### Request
-
-##### Header
-
-| name | description | required |
-|---|:---:|:---:|
-| Content-Type | application/json | O |
-
-##### Request Body
+###### Response Body
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| commentId | Integer | 신고할 댓글 ID | O |
-| reason | String | 신고 사유 | O |
+| code | String | 결과 코드 | O |
+| message | String | 결과 메세지 | O |
 
-##### Example
+###### Example
 
+**응답 성공**
 ```bash
-curl -X POST "http://localhost:4200/api/v1/customer_board_comment_reports" \
--H "Content-Type: application/json" \
--d '{
-  "commentId": 1,
-  "reason": "신고 사유"
-}'
-
-##### Response
-
-##### Header
-
-| name | description | required |
-|---|:---:|:---:|
-| Content-Type | application/json | O |
-
-##### Response Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| id | Integer | 생성된 신고 ID | O |
-
-##### Example
-
-```json
-HTTP/1.1 201 Created
-Content-Type: application/json
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
 {
-  "id": 1
+  "code": "SU",
+  "message": "Success."
 }
+```
+
+**응답 : 실패 (데이터 유효성 검사 실패)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "VF",
+  "message": "Validation Failed."
+}
+```
+
+**응답 : 실패 (존재하지 않는 게시물)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "NB",
+  "message": "No Exist Board."
+}
+```
+
+**응답 : 실패 (인가 실패)**
+```bash
+HTTP/1.1 403 Forbidden
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "AF",
+  "message": "Authorization Failed."
+}
+```
+
+**응답 : 실패 (데이터베이스 오류)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "DBE",
+  "message": "Database Error."
+}
+```

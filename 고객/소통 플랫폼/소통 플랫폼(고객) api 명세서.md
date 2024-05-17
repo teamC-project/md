@@ -1,6 +1,6 @@
-### API 명세서 0.1v
+### API 명세서 0.3v
 
-해당 API 명세서는 '헤어케어 디자이너 매칭 플랫폼 서비스'의 소통 플랫폼 REST API를 명세하고 있습니다.
+해당 API 명세서는  소통 플랫폼 REST API를 명세하고 있습니다.
 
 Domain: http://localhost:4200
 
@@ -9,71 +9,107 @@ Domain: http://localhost:4200
 
 url: /api/v1/communication
 
-게시글 작성
-설명
-고객이 소통 플랫폼에서 새로운 게시글을 작성합니다. 성공 시 작성된 게시글 정보를 반환합니다.
+#### - 소통 플랫폼 게시물 작성  
+  
+##### 설명
 
-method: POST
-url: /
+클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 제목, 내용을 입력받고 작성에 성공하면 성공처리를 합니다. 만약 작성에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
 
-Request
+- method : **POST**  
+- URL : **/**  
 
-Header
-| name         | description | required |
-|--------------|:-----------:|:--------:|
-| Authorization | Bearer 토큰  |    O     |
+##### Request
 
-Request Body
-| name      |  type   | description | required |
-|-----------|:-------:|:-----------:|:--------:|
-| title     | String  |  게시글 제목   |    O     |
-| content   | String  |  게시글 내용   |    O     |
-| isSecret  | Boolean |   비밀글 여부  |    O     |
-| fileUrls  | String[] |  첨부 파일 URL 목록 |  X   |
+###### Header
 
-Response
+| name | description | required |
+|---|:---:|:---:|
+| Authorization | 인증에 사용될 Bearer 토큰 | O |
 
-Header
-| name         | description        | required |
-|--------------|--------------------|:--------:|
-| Content-Type | application/json   |    O     |
+###### Request Body
 
-Response Body
-| name    |  type  |   description   | required |
-|---------|:------:|:---------------:|:--------:|
-| code    | String |     응답 코드     |    O     |
-| message | String |     응답 메시지    |    O     |
-| post    |  JSON  | 작성된 게시글 정보 |    O     |
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| customerBoardTitle | String | 디자이너 게시물 제목 | O |
+| customerBoardContents | String | 디자이너 게시물 내용 | O |
 
-post 상세 정보
-| name      |   type   |    description    | required |
-|-----------|:--------:|:-----------------:|:--------:|
-| id        |   Long   |      게시글 ID      |    O     |
-| title     |  String  |      게시글 제목      |    O     |
-| content   |  String  |      게시글 내용      |    O     |
-| isSecret  | Boolean  |      비밀글 여부      |    O     |
-| createdAt |  String  |      작성 일시       |    O     |
-| fileUrls  | String[] | 첨부 파일 URL 목록 |    X     |
+###### Example
 
-Example
-json
+```bash
+curl -v -X POST "http://localhost:4200/api/v1/designer/board/" \
+ -H "Authorization: Bearer {JWT}" \
+ -d "customerBoardTitle={customerBoardTitle}" \
+ -d "customerBoardContents={customerBoardContents}
+```
+
+##### Response
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Content-Type | 반환하는 Response Body의 Content Type (application/json) | O |
+
+###### Response Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| code | String | 결과 코드 | O |
+| message | String | 결과 메세지 | O |
+
+###### Example
+
+**응답 성공**
+```bash
 HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
 {
-  "code": "SP",
-  "message": "Success",
-  "post": {
-    "id": 42,
-    "title": "긴 머리 스타일링 질문이요",
-    "content": "안녕하세요 디자이너님, 제가 머리카락이 길어서 스타일링하기 힘든데 어떻게 하면 좋을까요?",
-    "isSecret": false,
-    "createdAt": "2023-06-02T10:30:00",
-    "fileUrls": [
-      "https://example.com/files/longhair1.jpg",
-      "https://example.com/files/longhair2.jpg"
-    ]
-  }
+  "code": "SU",
+  "message": "Success.",
 }
+```
+
+**응답 : 실패 (데이터 유효성 검사 실패)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "VF",
+  "message": "Validation Failed."
+}
+```
+
+**응답 : 실패 (인가 실패)**
+```bash
+HTTP/1.1 403 Forbidden
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "AF",
+  "message": "Authorization Failed."
+}
+```
+
+**응답 : 실패 (인증 실패)**
+```bash
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "AF",
+  "message": "Authentication Failed."
+}
+```
+
+**응답 : 실패 (데이터베이스 오류)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "DBE",
+  "message": "Database Error."
+}
+```
+
+***
 
 게시글 수정
 설명
@@ -492,294 +528,3 @@ Content-Type: application/json;charset=UTF-8
 
 
 
-# API 명세서
-
-해당 API 명세서는 '헤어어드바이저 디자이너 매칭 플랫폼 서비스'의 고객소통파트 REST API를 명세하고 있습니다.
-
-- Domain: <http://localhost:4200>
-
-## 소통 플랫폼 모듈
-
-고객과 디자이너간 1:1 소통을 위한 채팅 기능 관련 API입니다.
-
-- url: /api/v1/communication
-
-### 채팅방 생성
-
-#### 설명
-
-고객이 디자이너의 댓글에서 채팅 시작 버튼을 눌러 채팅방을 생성합니다. 성공 시 채팅방 정보를 반환합니다.
-
-- method: **POST**
-- url: **/**
-
-#### Request
-
-##### Header
-| name         | description | required |
-|--------------|:-----------:|:--------:|
-| Authorization | Bearer 토큰  |    O     |
-  
-##### Request Body
-| name       |  type  |   description   | required |
-|------------|:------:|:---------------:|:--------:|
-| designerId |  Long  | 디자이너 사용자 ID |    O     |
-  
-#### Response
-
-##### Header
-| name         | description        | required |
-|--------------|--------------------|:--------:|
-| Content-Type | application/json   |    O     |
-  
-##### Response Body
-| name     |  type  |   description   | required |
-|----------|:------:|:---------------:|:--------:|
-| code     | String |     응답 코드     |    O     |
-| message  | String |     응답 메시지    |    O     |
-| chatRoom |  JSON  | 생성된 채팅방 정보 |    O     |
-  
-##### chatRoom 상세 정보
-| name      |  type  |   description   | required |
-|-----------|:------:|:---------------:|:--------:|
-| id        |  Long  |    채팅방 ID     |    O     |
-| userId    |  Long  |   고객 사용자 ID   |    O     |
-| designerId |  Long  |  디자이너 사용자 ID  |    O     |
-| createdAt | String |    생성 일시     |    O     |
-##### Example
-
-```json
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "SC",
-  "message": "Success",
-  "chatRoom": {
-    "id": 23,
-    "userId": 42,
-    "designerId": 87,
-    "createdAt": "2023-06-01T15:30:00"
-  }
-}
-
-채팅 메시지 전송
-설명
-특정 채팅방에서 고객 또는 디자이너가 메시지를 전송합니다. 성공 시 전송된 메시지 정보를 반환합니다.
-
-method: POST
-url: /:roomId/message
-
-Request
-
-Header
-| name         | description | required |
-|--------------|:-----------:|:--------:|
-| Authorization | Bearer 토큰  |    O     |
-
-Request Parameter
-| name   |  type  | description | required |
-|--------|:------:|:-----------:|:--------:|
-| roomId |  Long  |   채팅방 ID   |    O     |
-
-Request Body
-| name    |  type  | description | required |
-|---------|:------:|:-----------:|:--------:|
-| content | String |   메시지 내용  |    O     |
-
-Response
-
-Header
-| name         | description        | required |
-|--------------|--------------------|:--------:|
-| Content-Type | application/json   |    O     |
-
-Response Body
-| name    |  type  |  description   | required |
-|---------|:------:|:--------------:|:--------:|
-| code    | String |    응답 코드     |    O     |
-| message | String |    응답 메시지    |    O     |
-| chatMessage | JSON | 전송된 메시지 정보 |    O     |
-
-chatMessage 상세 정보
-| name     |  type  |    description    | required |
-|----------|:------:|:-----------------:|:--------:|
-| id       |  Long  |     메시지 ID      |    O     |
-| roomId   |  Long  |      채팅방 ID      |    O     |
-| senderId |  Long  |    발신자 사용자 ID   |    O     |
-| content  | String |      메시지 내용      |    O     |
-| sentAt   | String |      전송 일시      |    O     |
-
-Example
-
-```json
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "SS",  
-  "message": "Success",
-  "chatMessage": {
-    "id": 123, 
-    "roomId": 23,
-    "senderId": 42,  
-    "content": "안녕하세요 상담 가능할까요?",
-    "sentAt": "2023-06-01T15:35:00" 
-  }
-}
-
-채팅 메시지 목록 조회
-
-설명
-
-특정 채팅방의 메시지 목록을 조회합니다. 한 번에 최대 50개씩 조회되며, 이전 메시지가 더 있다면 이전 메시지 조회를 위한 nextPage 값을 내려줍니다.
-
-method: GET
-url: /:roomId/messages
-
-Request
-Header
-| name         | description | required |
-|--------------|:-----------:|:--------:|
-| Authorization | Bearer 토큰  |    O     |
-
-Request Parameter
-| name   |  type  | description | required |
-|--------|:------:|:-----------:|:--------:|
-| roomId |  Long  |   채팅방 ID   |    O     |
-| page   |  Int   |    페이지 번호  |    X     |
-
-Response
-
-Header
-| name         | description        | required |  
-|--------------|--------------------|:--------:|
-| Content-Type | application/json   |    O     |
-
-Response Body
-| name     |   type    |   description    | required |
-|----------|:---------:|:----------------:|:--------:|
-| code     |  String   |     응답 코드      |    O     |
-| message  |  String   |     응답 메시지     |    O     |
-| messages | JSON Array |    메시지 목록     |    O     |
-| nextPage |    Int    | 다음 페이지 번호 (없으면 null) |    X     |
-
-messages 내 각 객체 상세 정보
-| name     |  type  |    description    | required |
-|----------|:------:|:-----------------:|:--------:|  
-| id       |  Long  |     메시지 ID      |    O     |
-| roomId   |  Long  |      채팅방 ID      |    O     |
-| senderId |  Long  |    발신자 사용자 ID   |    O     |
-| content  | String |      메시지 내용      |    O     | 
-| sentAt   | String |      전송 일시      |    O     |
-
-Example
-json
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "SL",
-  "message": "Success",
-  "messages": [
-    {
-      "id": 456,
-      "roomId": 23, 
-      "senderId": 87,
-      "content": "안녕하세요 고객님, 상담 가능합니다.",
-      "sentAt": "2023-06-01T15:40:00"
-    },
-    {
-      "id": 123,
-      "roomId": 23,
-      "senderId": 42,
-      "content": "안녕하세요 상담 가능할까요?", 
-      "sentAt": "2023-06-01T15:35:00"
-    }
-  ],
-  "nextPage": 1
-}
-
-채팅 메시지 신고
-
-설명
-
-특정 채팅 메시지를 신고합니다. 신고가 성공적으로 접수되면 성공 메시지를 반환합니다.
-
-method: POST
-url: /report
-
-Request
-
-Header
-| name         | description | required |  
-|--------------|:-----------:|:--------:|
-| Authorization | Bearer 토큰  |    O     |
-
-Request Body
-| name      |  type  | description | required |
-|-----------|:------:|:-----------:|:--------:|
-| messageId |  Long  |   메시지 ID   |    O     |
-| reason    | String |    신고 사유   |    O     |
-
-Response
-
-Header
-| name         | description        | required |
-|--------------|--------------------|:--------:|
-| Content-Type | application/json   |    O     |
-
-Response Body
-| name    |  type  | description | required |
-|---------|:------:|:-----------:|:--------:|
-| code    | String |   응답 코드    |    O     |
-| message | String |   응답 메시지   |    O     |
-
-Example
-HTTP/1.1 200 OK 
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "SR",
-  "message": "Success"  
-}
-
-채팅방 나가기
-
-설명
-
-사용자가 특정 채팅방에서 나갑니다. 나가기가 성공하면 나간 채팅방 ID와 성공 메시지를 반환합니다.
-
-method: DELETE
-url: /:roomId
-
-Request
-Header
-| name         | description | required |
-|--------------|:-----------:|:--------:|  
-| Authorization | Bearer 토큰  |    O     |
-
-Request Parameter
-| name   |  type  | description | required |
-|--------|:------:|:-----------:|:--------:|
-| roomId |  Long  |   채팅방 ID   |    O     |
-
-Response
-
-Header
-| name         | description        | required |
-|--------------|--------------------|:--------:|
-| Content-Type | application/json   |    O     |
-
-Response Body
-| name    |  type  | description | required |
-|---------|:------:|:-----------:|:--------:|
-| code    | String |   응답 코드    |    O     | 
-| message | String |   응답 메시지   |    O     |
-| roomId  |  Long  |   나간 채팅방 ID   |    O     |
-
-Example
-
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "SL",
-  "message": "Success", 
-  "roomId": 23
-}

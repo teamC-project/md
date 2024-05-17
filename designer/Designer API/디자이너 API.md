@@ -35,16 +35,16 @@
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| designer_board_title | String | 디자이너 게시물 제목 | O |
-| designer_board_contents | String | 디자이너 게시물 내용 | O |
+| designerBoardTitle | String | 디자이너 게시물 제목 | O |
+| designerBoardContents | String | 디자이너 게시물 내용 | O |
 
 ###### Example
 
 ```bash
 curl -v -X POST "http://localhost:4200/api/v1/designer/board/" \
  -H "Authorization: Bearer {JWT}" \
- -d "designer_board_title={designer_board_title}" \
- -d "designer_board_contents={designer_board_contents}
+ -d "designerBoardTitle={designerBoardTitle}" \
+ -d "designer_board_contents={designeBboardContents}
 ```
 
 ##### Response
@@ -159,9 +159,9 @@ curl -v -X GET "http://localhost:4200/api/v1/designer/board/list" \
 **designBoardListItem**
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| designer_board_number | int | 디자이너 게시글 번호 | O |
-| designer_board_title | String | 제목 | O |
-| designer_board_writerId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
+| designerBoardNumber | int | 디자이너 게시글 번호 | O |
+| designerBoardTitle | String | 제목 | O |
+| designerBoard_writerId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
 | designer_board_writeDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
 | designer_board_viewCount | int | 조회수 | O |
 
@@ -562,20 +562,24 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| designer_board_number | int | 게시물 번호 | O |
+| designerBoardNumber | int | 게시물 번호 | O |
 
 ###### Request Body
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| designer_board_comment | String | 답글 내용 | O |
+| designerBoardCommentWriterId | String | 답글 작성자 | O |
+| designerBoardCommentContents | String | 답글 내용 | O |
+| designerBoardCommentWriteDatetime | String | 답글 작성일</br>(yy.mm.dd 형태) | O |
 
 ###### Example
 
 ```bash
 curl -v -X POST "http://localhost:4200/api/v1/board/`${boardNumber}`/comment" \
  -H "Authorization: Bearer {JWT}" \
- -d "designer_board_comment={designer_board_commnet}"
+ -d "designer_board_comment_contents={designer_board_commnet_contents}"
+ -d "designer_board_comment_contents={designer_board_commnet_contents}"
+ -d "designer_board_comment_contents={designer_board_commnet_contents}"
 ```
 
 ##### Response

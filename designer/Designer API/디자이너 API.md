@@ -161,7 +161,7 @@ curl -v -X GET "http://localhost:4200/api/v1/designer_board/list" \
 |---|:---:|:---:|:---:|
 | designerBoardNumber | int | 디자이너 게시글 번호 | O |
 | designerBoardTitle | String | 제목 | O |
-| designerBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
+| designerBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 \*) | O |
 | designerBoardWriteDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
 | designerBoardViewCount | int | 조회수 | O |
 
@@ -269,7 +269,7 @@ curl -v -X GET "http://localhost:4200/api/v1/designer_board/list/search?word=${s
 |---|:---:|:---:|:---:|
 | designerBoardNumber | int | 게시물 번호 | O |
 | designerBoardTitle | String | 제목 | O |
-| designerBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
+| designerBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 \*) | O |
 | designerBoardWriteDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
 | designerBoardViewCount | int | 조회수 | O |
 
@@ -373,7 +373,7 @@ curl -v -X GET "http://localhost:4200/api/v1/designer_board/`${designerBoardNumb
 | message | String | 결과 메세지 | O |
 | designerBoardNumber | int | 게시물 번호 | O |
 | designerBoardTitle | String | 제목 | O |
-| designerBoardWriterId | String | 작성자 아이디 | O |
+| designerBoardWriterId | String | 작성자 아이디 </br>(첫글자를 제외한 나머지 문자는 \*) | O |
 | designerBoardWriteDatetime | String | 작성일</br>(yyyy.mm.dd 형태) | O |
 | designerBoardViewCount | int | 조회수 | O |
 | designerBoardContents | String | 내용 | O |
@@ -568,7 +568,7 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| designerBoardCommentWriterId | String | 답글 작성자 | O |
+| designerBoardCommentWriterId | String | 답글 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 \*) | O |
 | designerBoardCommentContents | String | 답글 내용 | O |
 | designerBoardCommentWriteDatetime | String | 답글 작성일</br>(yy.mm.dd 형태) | O |
 
@@ -679,7 +679,7 @@ Content-Type: application/json;charset=UTF-8
 
 | name     |  type  | description | required |
 | -------- | :----: | :---------: | :------: |
-| designerBoardCommentWriterId | String | 답글 작성자 | O |
+| designerBoardCommentWriterId | String | 답글 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 \*) | O |
 | designerBoardCommentContents | String | 답글 내용 | O |
 | designerBoardCommentWriteDatetime | String | 답글 작성일</br>(yy.mm.dd 형태) | O |
 

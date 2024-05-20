@@ -681,7 +681,7 @@ Content-Type: application/json;charset=UTF-8
 | -------- | :----: | :---------: | :------: |
 | designerBoardCommentWriterId | String | 답글 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 \*) | O |
 | designerBoardCommentContents | String | 답글 내용 | O |
-| designerBoardCommentWriteDatetime | String | 답글 작성일</br>(yy.mm.dd 형태) | O |
+| designerBoardCommentWriteDatetime | String | 답글 작성일</br>(yyyy.mm.dd 형태) | O |
 
 ###### Example
 

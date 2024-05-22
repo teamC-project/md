@@ -175,14 +175,10 @@ curl -v -X GET "http://localhost:4200/api/v1/designer_board/list" \
 | designerBoard_writerId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
 | designer_board_writeDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
 | designer_board_viewCount | int | 조회수 | O |
-=======
 | designerBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
-=======
 | designerBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 \*) | O |
->>>>>>> 8a294381b1f9f11e2ed9421cc79fa730e0e7a701
 | designerBoardWriteDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
 | designerBoardViewCount | int | 조회수 | O |
->>>>>>> 89c6bedaacfe4141b5e0eff0259daaad5462560b
 
 ###### Example
 
@@ -212,15 +208,6 @@ Content-Type: application/json;charset=UTF-8
 {
   "code": "AF",
   "message": "Authorization Failed."
-}
-```
-
-```bash
-HTTP/1.1 404 Not Found
-Content-Type: application/json; charset=UTF-8
-{
-  "code": "PNF",
-  "message": "Page Not Found."
 }
 ```
 

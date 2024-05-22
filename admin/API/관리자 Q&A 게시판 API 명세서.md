@@ -419,17 +419,6 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-**응답 : 실패 (존재하지 않는 게시물)**
-
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "NB",
-  "message": "No Exist Board."
-}
-```
-
 **응답 : 실패 (인가 실패)**
 
 ```bash
@@ -590,9 +579,9 @@ Content-Type: application/json;charset=UTF-8
 ###### Example
 
 ```bash
-curl -v -X POST "http://localhost:4200/api/v1/qna_board/${qnaBoardNumber}/qna_comment" \
+curl -v -X POST "http://localhost:4200/api/v1/qna_board/`${qnaBoardNumber}`/comment" \
  -H "Authorization: Bearer {JWT}" \
- -d "qnaBoardComment"=`${qnaBoardComment}`
+ -d "qnaBoardCommentContents"=`${qnaBoardCommnetContents}`
 ```
 
 ##### Response

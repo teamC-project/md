@@ -198,15 +198,6 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-```bash
-HTTP/1.1 404 Not Found
-Content-Type: application/json; charset=UTF-8
-{
-  "code": "PNF",
-  "message": "Page Not Found."
-}
-```
-
 **응답 : 실패 (데이터베이스 오류)**
 ```bash
 HTTP/1.1 500 Internal Server Error

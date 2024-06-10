@@ -236,7 +236,7 @@ Content-Type: application/json;charset=UTF-8
 | name | type | description | required |
 |---|:---:|:---:|:---:|
 | userId | String | 사용자 아이디 | O |
-| userPassword | String | 사용자 비밀번호 (영문+숫자 8~13자) | O |
+| userPassword | String | 사용자 비밀번호 (영문+숫자 8~15자) | O |
 | userEmail | String | 사용자 이메일 (이메일 형태의 데이터) | O |
 | authNumber | Int | 인증 확인할 인증 번호 | O |
 | userGender | String |  선택한 성별 ("male", "female") | O |

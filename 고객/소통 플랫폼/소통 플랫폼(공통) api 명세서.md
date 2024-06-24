@@ -1,11 +1,6 @@
-소통 플랫폼(공통)api 명세서 0.4v
-<h1 style='background-color: rgba(55, 55, 55, 0.4); text-align: center'>API 명세서</h1>
-
-해당 API 명세서는 '소통플랫폼(공통)'의 REST API를 명세하고 있습니다.
+소통 플랫폼(공통)api 명세서 0.5v
 
 -Domain: http://localhost:4200
-
-***
 
 <h2 style='background-color: rgba(55, 55, 55, 0.2); text-align: center'>소통 플랫폼 모듈</h2>
 

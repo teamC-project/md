@@ -214,15 +214,202 @@ Content-Type: application/json;charset=UTF-8
 
 ***
 
-#### - 회원가입
+#### - 회원가입(공통)
   
 ##### 설명
 
-클라이언트로부터 고객 | 관리자는 아이디, 비밀번호, 이메일, 인증번호, 연령대, 성별을 필수로 입력받고 디자이너는 면허증 사진 파일, 업체명을 추가로 입력받아 회원가입 처리를 합니다. 정상적으로 회원가입이 완료되면 성공처리를 합니다. 
-만약 중복된 아이디, 중복된 이메일, 인증번호 불일치가 발생하면 실패처리를 합니다. 데이터베이스 오류가 발생할 수 있습니다.
+클라이언트로부터 고객 | 관리자 회원가입 URL로 들어갈 수 있는 버튼이 각각 있습니다. 고객은 고객버튼, 디자이너는 디자이너 버튼을 클릭하여 해당 역할에 맞는 회원가입 URL로 이동하여 회원가입을 진행할 수 있습니다. 
+데이터베이스 오류가 발생할 수 있습니다.
 
 - method : **POST**  
 - URL : **/sign_up**  
+
+##### Request
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+
+###### Request Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+
+###### Example
+
+```bash
+curl -v -X POST "http://localhost:4200/api/v1/auth/sign_up" \
+```
+
+##### Response
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Content-Type | 반환하는 Response Body의 Content Type (application/json) | O |
+
+###### Response Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| code | String | 응답 코드 | O |
+| message | String | 응답 메시지 | O |
+
+###### Example
+
+**응답 성공**
+```bash
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "SU",
+  "message": "Success."
+}
+```
+
+**응답 : 실패 (데이터베이스 오류)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "DBE",
+  "message": "Database Error."
+}
+```
+
+***
+
+#### - 고객 회원가입
+  
+##### 설명
+
+클라이언트로부터 공통 회원가입 URL에서 고객 회원가입 버튼을 클릭하여 고객 회원가입 URL로 이동합니다. 고객은 아이디, 비밀번호, 이메일, 인증번호, 연령대, 성별을 필수로 입력받아 회원가입 처리를 합니다. 정상적으로 회원가입으로 완료하면 회원가입 성공 처리를 합니다.
+만약 중복된 아이디, 중복된 이메일, 인증번호 불일치가 발생하면 실패처리를 합니다. 데이터베이스 오류가 발생할 수 있습니다.
+
+- method : **POST**  
+- URL : **/customer_sign_up**  
+
+##### Request
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+
+###### Request Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| userId | String | 사용자 아이디 | O |
+| userPassword | String | 사용자 비밀번호 (영문+숫자 8~13자) | O |
+| userEmail | String | 사용자 이메일 (이메일 형태의 데이터) | O |
+| authNumber | Int | 인증 확인할 인증 번호 | O |
+| userGender | String |  선택한 성별 ("male", "female") | O |
+| userAge | Int | 선택할 나이 | O |
+| type | customer, desginer, admin |  
+
+###### Example
+
+```bash
+curl -v -X POST "http://localhost:4200/api/v1/auth/customer_sign_up" \
+ -d "userId=service123" \
+ -d "userPassword=Pa55w0rd" \
+ -d "userEmail=email@email.com" \
+ -d "authNumber=0123"  \
+ -d "userAge":"20" \
+ -d "userGender":"male"
+```
+
+##### Response
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Content-Type | 반환하는 Response Body의 Content Type (application/json) | O |
+
+###### Response Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| code | String | 응답 코드 | O |
+| message | String | 응답 메시지 | O |
+
+###### Example
+
+**응답 성공**
+```bash
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "SU",
+  "message": "Success."
+}
+```
+
+**응답 : 실패 (데이터 유효성 검사 실패)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "VF",
+  "message": "Varidation Failed."
+}
+```
+
+**응답 : 실패 (중복된 아이디)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "DI",
+  "message": "Duplicatied Id."
+}
+```
+
+**응답 : 실패 (중복된 이메일)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "DE",
+  "message": "Duplicatied Email."
+}
+```
+
+**응답 : 실패 (이메일 인증 실패)**
+```bash
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "AF",
+  "message": "Authentication Failed."
+}
+```
+
+**응답 : 실패 (데이터베이스 오류)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "DBE",
+  "message": "Database Error."
+}
+```
+
+***
+
+#### - 디자이너 회원가입
+  
+##### 설명
+
+클라이언트로부터 공통 회원가입 URL에서 다자이너 회원가입 버튼을 클릭하여  아이디, 비밀번호, 이메일, 인증번호, 연령대, 성별, 면허증 사진 파일, 업체명을 필수로 입력받아 회원가입 처리를 합니다. 정상적으로 회원가입이 완료되면 성공처리를 합니다. 
+만약 중복된 아이디, 중복된 이메일, 인증번호 불일치가 발생하면 실패처리를 합니다. 데이터베이스 오류가 발생할 수 있습니다.
+
+- method : **POST**  
+- URL : **/desginer_sign_up**  
 
 ##### Request
 
@@ -248,7 +435,7 @@ Content-Type: application/json;charset=UTF-8
 ###### Example
 
 ```bash
-curl -v -X POST "http://localhost:4200/api/v1/auth/sign_up" \
+curl -v -X POST "http://localhost:4200/api/v1/auth/desginer_sign_up" \
  -d "userId=service123" \
  -d "userPassword=Pa55w0rd" \
  -d "userEmail=email@email.com" \
@@ -945,7 +1132,7 @@ Content-Type: application/json;charset=UTF-8
 ***
 
 #### - 개인정보수정
-  
+
 ##### 설명
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 클라이언트로부터 고객 | 관리자는 아이디를 제외한, 비밀번호, 연령대, 성별의 값을 입력받고 디자이너는 면허증 사진 파일, 업체명을 추가로 입력받습니다. 정상적으로 개인정보 수정이 완료되면 성공처리를 합니다.
 만약 작성에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.

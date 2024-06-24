@@ -1,4 +1,4 @@
-소통 플랫폼(공통)api 명세서 0.5v
+소통 플랫폼(공통)api 명세서 0.6v
 
 -Domain: http://localhost:4200
 
@@ -72,7 +72,7 @@ Content-Type: application/json;charset=UTF-8
     {
       "customerBoardNumber " : 1,
       "customerBoardtitle": "헤어 스타일 추천해주세요.", 
-      "customerBoardWriterId": "d***",
+      "customerBoardWriterId": "dddd",
       "customerBoardwriteDatetime": "23.05.15",
       "customerBoardViewCount": 15
     }, ...
@@ -169,7 +169,7 @@ Content-Type: application/json;charset=UTF-8
     {
       "customerBoardNumber" : 1,
       "customerBoardTitle": "헤어 스타일 추천해주세요", 
-      "customerBoardWriterId": "d***",
+      "customerBoardWriterId": "dddd",
       "customerBoardWriteDatetime": "23.05.5",
       "customerBoardViewCount": 15
     }, ...
@@ -260,6 +260,7 @@ curl -v -X GET "http://localhost:4200/api/v1/customer_board/`${customerBoardNumb
 | customerBoardViewCount | int | 조회수 | O |
 | customerBoardContents | String | 내용 | O |
 | customerBoardComment | String | 답글 내용 | X |
+| isSecret | Boolean | 비밀글 여부 | O |
 
 ###### Example
 
@@ -276,7 +277,8 @@ Content-Type: application/json;charset=UTF-8
   "customerBoardWriteDatetime": `${customerBoardWriteDatetime}`,
   "customerBoardViewCount": `${customerBoardViewCount}`,
   "customerBoardContents": `${customerBoardContents}`,
-  "customerBoardComment": `${customerBoardComment}`
+  "customerBoardComment": `${customerBoardComment}`,
+  "isSecret":`${secret}`
 }
 ```
 

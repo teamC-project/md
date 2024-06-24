@@ -1,4 +1,4 @@
-소통 플랫폼(고객)api 명세서 0.6v
+소통 플랫폼(고객)api 명세서 0.7v
 
 <h2 style='background-color: rgba(55, 55, 55, 0.2); text-align: center'>게시물 모듈</h2>
 게시물 조회, 작성, 수정, 삭제와 관련된 REST API 모듈입니다.
@@ -36,6 +36,7 @@ curl -v -X POST "http://localhost:4200/api/v1/customer_board/" \
  -H "Authorization: Bearer {JWT}" \
  -d "customerBoardTitle"=`${customerBoardTitle}` \
  -d "customerBoardContents"=`${customerBoardContents}` \
+
 ```
 
 ##### Response
@@ -130,7 +131,11 @@ Content-Type: application/json;charset=UTF-8
 | customerBoardNumber | int  | 소통 플랫폼 게시물 번호 |    O     |
 
 ###### Request Body
-
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| customerBoardTitle | String | 소통 플랫폼 게시물 제목 | O |
+| customerBoardContents | String | 소통 플랫폼 게시물 내용 | O |
+| secret | Boolean | 비밀글 여부 | O |
 ###### Example
 
 **응답 성공**

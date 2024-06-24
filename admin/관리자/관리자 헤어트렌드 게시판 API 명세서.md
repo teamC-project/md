@@ -11,7 +11,110 @@
 인증 및 인가와 관련된 REST API 모듈  
 게시물 작성, 수정, 삭제 리스트 보기 의 API가 포함되어 있습니다.  
   
-- url : /api/v1/trend_board
+- url : /api/v1/service/trend_board
+
+#### - 헤어트렌드 게시판  전체 게시물 리스트 불러오기  
+  
+##### 설명
+
+클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 요청을 보내면 작성일 기준 내림차순으로 게시물 리스트를 반환합니다. 만약 불러오기에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
+
+- method : **GET**  
+- URL : **/** 
+
+##### Request
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Authorization | 인증에 사용될 Bearer 토큰 | O |
+
+###### Example
+
+```bash
+curl -v -X GET "http://localhost:4200/api/v1/trend_board/" \
+ -H "Authorization: Bearer {JWT}"
+```
+
+##### Response
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Content-Type | 반환하는 Response Body의 Content Type (application/json) | O |
+
+###### Response Body
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| code | String | 결과 코드 | O |
+| message | String | 결과 메세지 | O |
+| trendboardList | trendBoardListItem[] | 헤어 트렌드 게시물 리스트 | O |
+
+**trendBoardListItem**
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| trendBoardNumber | int | 헤어트렌드 게시판 게시글 번호 | O |
+| trendBoardTitle | String | 제목 | O |
+| trendBoardThumbnailImage | String | 게시글 썸네일 이미지 | O |
+| trendBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
+| trendBoardWriteDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
+| trendBoardLikeCount | int | 좋아요 | O |
+| trendBoardViewCount | int | 조회수 | O |
+###### Example
+
+**응답 성공**
+```bash
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "SU",
+  "message": "Success.",
+  "boardList": [
+    {
+      "trendBoardNumber " : 1,
+      "trendBoardTitle": "요즘 뜨는 헤어 스타일은 이거 입니다.", 
+      "trendBoardThumbnailImage" : "hairImage01.jpg",
+      "trendBoardWriterId": "d***",
+      "trendBoardWriteDatetime": "23.05.15",
+      "trendBoardLikeCount": 15
+			"trendBoardViewCount" : 0
+    }, ...
+  ]
+}
+```
+
+**응답 : 실패 (인가 실패)**
+```bash
+HTTP/1.1 403 Forbidden
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "AF",
+  "message": "Authorization Failed."
+}
+```
+
+```bash
+HTTP/1.1 404 Not Found
+Content-Type: application/json; charset=UTF-8
+{
+  "code": "PNF",
+  "message": "Page Not Found."
+}
+```
+
+**응답 : 실패 (데이터베이스 오류)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "DBE",
+  "message": "Database Error."
+}
+```
+
+***
 
 #### -  헤어트렌드 게시판 게시물 작성  
   
@@ -20,7 +123,7 @@
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 제목, 내용을 입력받고 작성에 성공하면 성공처리를 합니다. 만약 작성에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
 
 - method : **POST**  
-- URL : **/**  
+- URL : **/write**  
 
 ##### Request
 
@@ -36,16 +139,18 @@
 |---|:---:|:---:|:---:|
 | trendBoardTitle | String | 헤어 트렌드 게시물 제목 | O |
 | trendBoardContents | String | 헤어트렌드 게시물 내용 | O |
+| trendBoardThumbnailImage | Image | 헤어트렌드 게시물 썸네일 이미지 | O |
 
 
 
 ###### Example
 
 ```bash
-curl -v -X POST "http://localhost:4200/api/v1/trend_board/" \
+curl -v -X POST "http://localhost:4200/api/v1/trend_board/write" \
  -H "Authorization: Bearer {JWT}" \
  -d "trendBoardTitle={trendBoardtitle}" \
- -d "trendBoardContents={trendBoardcontents}"
+ -d "trendBoardContents={trendBoardcontents}"\
+ -d "trendBoardThumbnailImage = {trendBoardThumbnailImage}"\
 ```
 
 ##### Response
@@ -117,108 +222,6 @@ Content-Type: application/json;charset=UTF-8
 
 ***
 
-#### - 헤어트렌드 게시판  전체 게시물 리스트 불러오기  
-  
-##### 설명
-
-클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 요청을 보내면 작성일 기준 내림차순으로 게시물 리스트를 반환합니다. 만약 불러오기에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
-
-- method : **GET**  
-- URL : **/list** 
-
-##### Request
-
-###### Header
-
-| name | description | required |
-|---|:---:|:---:|
-| Authorization | 인증에 사용될 Bearer 토큰 | O |
-
-###### Example
-
-```bash
-curl -v -X GET "http://localhost:4200/api/v1/trend_board/list" \
- -H "Authorization: Bearer {JWT}"
-```
-
-##### Response
-
-###### Header
-
-| name | description | required |
-|---|:---:|:---:|
-| Content-Type | 반환하는 Response Body의 Content Type (application/json) | O |
-
-###### Response Body
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| code | String | 결과 코드 | O |
-| message | String | 결과 메세지 | O |
-| trendboardList | trendBoardListItem[] | 헤어 트렌드 게시물 리스트 | O |
-
-**trendBoardListItem**
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| trendBoardNumber | int | 헤어트렌드 게시판 게시글 번호 | O |
-| trendBoardTitle | String | 제목 | O |
-| trendBoardTitleImage | String | 게시글 썸네일 이미지 | O |
-| trendBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
-| trendBoardWriteDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
-| trendBoardLikeCount | int | 좋아요 | O |
-###### Example
-
-**응답 성공**
-```bash
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "SU",
-  "message": "Success.",
-  "boardList": [
-    {
-      "trendBoardNumber " : 1,
-      "trendBoardTitle": "요즘 뜨는 헤어 스타일은 이거 입니다.", 
-      "trendBoardTitleImage" : "hairImage01.jpg",
-      "trendBoardWriterId": "d***",
-      "trendBoardWriteDatetime": "23.05.15",
-      "trendBoardLikeCount": 15
-    }, ...
-  ]
-}
-```
-
-**응답 : 실패 (인가 실패)**
-```bash
-HTTP/1.1 403 Forbidden
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "AF",
-  "message": "Authorization Failed."
-}
-```
-
-```bash
-HTTP/1.1 404 Not Found
-Content-Type: application/json; charset=UTF-8
-{
-  "code": "PNF",
-  "message": "Page Not Found."
-}
-```
-
-**응답 : 실패 (데이터베이스 오류)**
-```bash
-HTTP/1.1 500 Internal Server Error
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "DBE",
-  "message": "Database Error."
-}
-```
-
-***
-
-
 #### - 헤어 트렌드 게시판 게시물 검색 리스트 불러오기  
   
 ##### 설명
@@ -226,7 +229,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 검색어를 입력받고 요청을 보내면 작성일 기준 내림차순으로 제목에 해당 검색어가 포함된 게시물 리스트를 반환합니다. 만약 불러오기에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **GET**  
-- URL : **/list/search**  
+- URL : **/search**  
 
 ##### Request
 
@@ -274,6 +277,7 @@ curl -v -X GET "http://localhost:4200/api/v1/trend_board/list/search?word=${sear
 | trendBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
 | trendBoardWriteDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
 | trendBoardLikeCount | int | 좋아요 | O |
+| trendBoardViewCount | int | 조회수 | O |
 
 ###### Example
 
@@ -288,10 +292,11 @@ Content-Type: application/json;charset=UTF-8
     {
       "trendBoardNumber " : 1,
       "trendBoardTitle": "요즘 뜨는 헤어 스타일은 이거 입니다.", 
-      "trendBoardTitleImage" : "hairImage01.jpg",
+      "trendBoardThumbnailImage" : "hairImage01.jpg",
       "trendBoardTrendBoardWriterId": "d***",
       "trendBoardWriteDatetime": "23.05.15",
       "trendBoardLikeCount": 15
+			"trendBoardViewCount": : 0
     }, ...
   ]
 }
@@ -376,11 +381,11 @@ curl -v -X GET "http://localhost:4200/api/v1/trend_board/${trendBoardNumber}" \
 | message | String | 결과 메세지 | O |
 | trendBoardNumber | int | 헤어트렌드 게시판 게시글 번호 | O |
 | trendBoardTitle | String | 제목 | O |
-| trendBoardTitleImage | String | 게시글 썸네일 이미지 | O |
 | trendBoardContents | String | 게시글 내용 | O |
 | trendBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
 | trendBoardWriteDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
 | trendBoardLikeCount | int | 좋아요 | O |
+| trendBoardViewCount | int | 조회수 | O |
 
 ###### Example
 
@@ -393,11 +398,11 @@ Content-Type: application/json;charset=UTF-8
   "message": "Success.",
   "trendBoardNumber": ${trendBoardNumber},
   "trendBoardTitle": "${trendBoardTitle}",
-  "trendBoardTitleImage": "${trendBoardTitleImage}",
    "trendBoardContents": "${trendBoardContents}",
   "trendBoardWriterId": "${trendBoardWriterId}",
   "trendBoardWriteDatetime": "${trendBoardWriteDatetime}",
   "trendBoardLikeCount": ${trendBoardLikeCount},
+	"trendBoardViewCount" : ${trendBoardViewCount}
 }
 ```
 
@@ -450,8 +455,8 @@ Content-Type: application/json;charset=UTF-8
 
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 게시물 번호를 입력받고 좋아요 버튼을 눌러 요청을 보내면 해당하는 헤어트렌드 게시물의 좋아요 수를 증가합니다. 만약 증가에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
-- method : **PATCH**  
-- URL : **/`${trendBoardNumber}`/like_count**  
+- method : **PUT**  
+- URL : **/`${trendBoardNumber}`/like**  
 
 ##### Request
 
@@ -470,7 +475,7 @@ Content-Type: application/json;charset=UTF-8
 ###### Example
 
 ```bash
-curl -v -X PATCH "http://localhost:4200/api/v1/trend_board/`${trendBoardNumber}`/like_count$" \
+curl -v -X PUT "http://localhost:4200/api/v1/trend_board/`${trendBoardNumber}`/like" \
  -H "Authorization: Bearer {JWT}"
 ```
 
@@ -1119,3 +1124,209 @@ Content-Type: application/json;charset=UTF-8
   "message": "Database Error."
 }
 ```
+
+#### - 헤어 트렌드 좋아요 누른 유저 리스트 조회하기
+  
+##### 설명
+
+클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 헤어 트렌드 게시물 번호를 입력받고 요청을 보내면 해당하는 헤어트렌드 게시물 좋아요 데이터를 반환합니다. 만약 불러오기에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
+
+- method : **GET**  
+- URL : **/`${trendBoardNumber}/like_list`**  
+
+##### Request
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Authorization | 인증에 사용될 Bearer 토큰 | O |
+
+###### Path Variable
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| trendBoardNumber | int | 헤어트렌드 게시물 번호 | O |
+
+###### Example
+
+```bash
+curl -v -X GET "http://localhost:4200/api/v1/trend_board/${trendBoardNumber}/like_list" \
+ -H "Authorization: Bearer {JWT}"
+```
+
+##### Response
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Content-Type | 반환하는 Response Body의 Content Type (application/json) | O |
+
+###### Response Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| code | String | 결과 코드 | O |
+| message | String | 결과 메세지 | O |
+| likeList | String | 트렌드 게시물 좋아요 누른 유저 리스트 | O | 
+
+###### Example
+
+**응답 성공**
+```bash
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+{
+"code" : "SU",
+"message" : "Success.",
+"likeList" : ["admin"] , 
+0
+"admin"
+}
+
+
+**응답 : 실패 (데이터 유효성 검사 실패)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "VF",
+  "message": "Validation Failed."
+}
+```
+
+**응답 : 실패 (존재하지 않는 게시물)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "NB",
+  "message": "No Exist Board."
+}
+```
+
+**응답 : 실패 (인가 실패)**
+```bash
+HTTP/1.1 403 Forbidden
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "AF",
+  "message": "Authorization Failed."
+}
+```
+
+**응답 : 실패 (데이터베이스 오류)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "DBE",
+  "message": "Database Error."
+}
+```
+
+***
+#### - 헤어트렌드 게시물 삭제
+
+##### 설명
+
+클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 트렌드 게시물 번호를 입력받고 요청을 보내면 해당하는 헤어트렌드  게시물 좋아요 리스트가 삭제됩니다. 만약 삭제에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
+
+- method : **DELETE**
+- URL : **/{trendBoardNumber}**
+
+##### Request
+
+###### Header
+
+| name          |        description        | required |
+| ------------- | :-----------------------: | :------: |
+| Authorization | 인증에 사용될 Bearer 토큰 |    O     |
+
+###### Path Variable
+
+| name            | type | description | required |
+| --------------- | :--: | :---------: | :------: |
+| trendBoardNumber | int  | 헤어 트렌드 게시물 번호  |    O     |
+
+###### Example
+
+```bash
+curl -v -X DELETE "http://localhost:4200/api/v1/trend_board/${trendBoardNumber}/like_list" \
+ -H "Authorization: Bearer {JWT}"
+```
+
+##### Response
+
+###### Header
+
+| name         |                       description                        | required |
+| ------------ | :------------------------------------------------------: | :------: |
+| Content-Type | 반환하는 Response Body의 Content Type (application/json) |    O     |
+
+###### Response Body
+
+| name    |  type  | description | required |
+| ------- | :----: | :---------: | :------: |
+| code    | String |  결과 코드  |    O     |
+| message | String | 결과 메세지 |    O     |
+
+###### Example
+
+**응답 성공**
+
+```bash
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "SU",
+  "message": "Success."
+}
+```
+
+**응답 : 실패 (데이터 유효성 검사 실패)**
+
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "VF",
+  "message": "Validation Failed."
+}
+```
+
+**응답 : 실패 (존재하지 않는 게시물)**
+
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "NB",
+  "message": "No Exist Board."
+}
+```
+
+**응답 : 실패 (인가 실패)**
+
+```bash
+HTTP/1.1 403 Forbidden
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "AF",
+  "message": "Authorization Failed."
+}
+```
+
+**응답 : 실패 (데이터베이스 오류)**
+
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "DBE",
+  "message": "Database Error."
+}
+```
+
+---

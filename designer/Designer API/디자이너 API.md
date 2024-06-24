@@ -43,8 +43,17 @@
 ```bash
 curl -v -X POST "http://localhost:4200/api/v1/designer_board/" \
  -H "Authorization: Bearer {JWT}" \
+<<<<<<< HEAD
+ -d "designerBoardTitle={designerBoardTitle}" \
+<<<<<<< HEAD
+ -d "designer_board_contents={designeBboardContents}
+=======
+ -d "designerBoardContents={designeBboardContents}
+>>>>>>> 89c6bedaacfe4141b5e0eff0259daaad5462560b
+=======
  -d "designerBoardTitle"=`${designerBoardTitle}` \
  -d "designerBoardContents"=`${designeBoardContents}` \
+>>>>>>> 061010a2a241b5f93609ab1aaab771e4531765c7
 ```
 
 ##### Response
@@ -161,6 +170,12 @@ curl -v -X GET "http://localhost:4200/api/v1/designer_board/list" \
 |---|:---:|:---:|:---:|
 | designerBoardNumber | int | 디자이너 게시글 번호 | O |
 | designerBoardTitle | String | 제목 | O |
+<<<<<<< HEAD
+<<<<<<< HEAD
+| designerBoard_writerId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
+| designer_board_writeDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
+| designer_board_viewCount | int | 조회수 | O |
+| designerBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
 | designerBoardWriterId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 \*) | O |
 | designerBoardWriteDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
 | designerBoardViewCount | int | 조회수 | O |
@@ -193,15 +208,6 @@ Content-Type: application/json;charset=UTF-8
 {
   "code": "AF",
   "message": "Authorization Failed."
-}
-```
-
-```bash
-HTTP/1.1 404 Not Found
-Content-Type: application/json; charset=UTF-8
-{
-  "code": "PNF",
-  "message": "Page Not Found."
 }
 ```
 
@@ -681,7 +687,7 @@ Content-Type: application/json;charset=UTF-8
 | -------- | :----: | :---------: | :------: |
 | designerBoardCommentWriterId | String | 답글 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 \*) | O |
 | designerBoardCommentContents | String | 답글 내용 | O |
-| designerBoardCommentWriteDatetime | String | 답글 작성일</br>(yy.mm.dd 형태) | O |
+| designerBoardCommentWriteDatetime | String | 답글 작성일</br>(yyyy.mm.dd 형태) | O |
 
 ###### Example
 

@@ -1,18 +1,9 @@
-소통 플랫폼(고객)api 명세서 0.4v
-<h1 style='background-color: rgba(55, 55, 55, 0.4); text-align: center'>API 명세서</h1>
+소통 플랫폼(고객)api 명세서 0.5v
 
-해당 API 명세서는 '소통플랫폼(고객)'의 REST API를 명세하고 있습니다.
+<h2 style='background-color: rgba(55, 55, 55, 0.2); text-align: center'>게시물 모듈</h2>
+게시물 조회, 작성, 수정, 삭제와 관련된 REST API 모듈입니다.
 
--Domain: http://localhost:4200
-
-***
-
-<h2 style='background-color: rgba(55, 55, 55, 0.2); text-align: center'>소통 플랫폼 모듈</h2>
-
-인증 및 인가와 관련된 REST API 모듈
-게시물 작성, 수정, 삭제 답글 작성, 삭제, 수정 등의 REST API가 포함되어 있습니다.
-
-- url: /api/v1/customer_board
+url: /api/v1/customer_board
 
 #### - 소통 플랫폼 게시물 작성  
   
@@ -140,106 +131,27 @@ Content-Type: application/json;charset=UTF-8
 
 ###### Request Body
 
-| name     |  type  | description | required |
-| -------- | :----: | :---------: | :------: |
-| customerBoardTitle    | String |  게시물 제목   |    O     |
-| customerBoardContents | String |  게시물 내용   |    O     |
-
-###### Example
-
-```bash
-curl -v -X PUT "http://localhost:4200/api/v1/customer_board/`${customerBoardNumber}`" \
- -H "Authorization: Bearer {JWT}" \
- -d "customerBoardTitle"=`${customerBoardTitle}` \
- -d "customerBoardContents"=`${customerBoardContents}` 
-```
-
-##### Response
-
-###### Header
-
-| name         |                       description                        | required |
-| ------------ | :------------------------------------------------------: | :------: |
-| Content-Type | 반환하는 Response Body의 Content Type (application/json) |    O     |
-
-###### Response Body
-
-| name    |  type  | description | required |
-| ------- | :----: | :---------: | :------: |
-| code    | String |  결과 코드  |    O     |
-| message | String | 결과 메세지 |    O     |
-
-###### Example
-
-**응답 성공**
-
-```bash
+Example
+json
 HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
 {
-  "code": "SU",
-  "message": "Success.",
+  "code": "SP",
+  "message": "Success",
+  "post": {
+    "id": 42,
+    "title": "긴 머리 스타일링 질문이요 (수정됨)",
+    "content": "안녕하세요 디자이너님, 추가로 궁금한 게 생겨서 글 수정합니다.",
+    "isSecret": false,
+    "createdAt": "2023-06-02T10:30:00",
+    "updatedAt": "2023-06-02T11:15:00",
+    "fileUrls": [
+      "https://example.com/files/longhair1.jpg",
+      "https://example.com/files/longhair2.jpg", 
+      "https://example.com/files/longhair3.jpg"
+    ]
+  }
 }
-```
-
-**응답 : 실패 (데이터 유효성 검사 실패)**
-
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "VF",
-  "message": "Validation Failed."
-}
-```
-
-**응답 : 실패 (인가 실패)**
-
-```bash
-HTTP/1.1 403 Forbidden
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "AF",
-  "message": "Authorization Failed."
-}
-```
-
-**응답 : 실패 (존재하지 않는 게시물)**
-
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "NB",
-  "message": "No Exist Board."
-}
-```
-
-
-**응답 : 실패 (권한 없음)**
-
-```bash
-HTTP/1.1 403 Forbidden
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "AF",
-  "message": "Authorization Failed."
-}
-```
-
-**응답 : 실패 (데이터베이스 오류)**
-
-```bash
-HTTP/1.1 500 Internal Server Error
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "DBE",
-  "message": "Database Error."
-}
-```
-
-
-***
 
 #### - 소통 플랫폼 게시물 삭제  
   
@@ -339,5 +251,4 @@ Content-Type: application/json;charset=UTF-8
 ```
 
 ***
-
 

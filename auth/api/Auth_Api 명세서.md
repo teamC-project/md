@@ -632,7 +632,7 @@ Content-Type: application/json;charset=UTF-8
 
 ##### 설명
 
-클라이언트로부터 고객 | 디자이너 | 관리자는 회원가입시 등록한 이메일을 통해 인증을 받아야 진행할 수 있다.
+클라이언트로부터 고객 | 디자이너 | 관리자는 회원가입시 등록한 이메일을 통해 인증을 받고 아이디를 찾을 수 잇다.
 만약 잘못된 이메일, 인증번호를 불일치하게 되면 실패처리 됩니다. 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **POST**  
@@ -675,6 +675,7 @@ curl -v -X POST "http://localhost:4200/api/v1/auth/id_found" \
 |---|:---:|:---:|:---:|
 | code | String | 응답 코드 | O |
 | message | String | 응답 메시지 | O |
+| userId | String | 사용자아이디 | O |
 
 ###### Example
 
@@ -685,6 +686,8 @@ Content-Type: application/json;charset=UTF-8
 {
   "code": "SU",
   "message": "Success."
+  "userId": "qwer1234"
+
 }
 ```
 
@@ -715,77 +718,6 @@ Content-Type: application/json;charset=UTF-8
 {
   "code": "AF",
   "message": "Authentication Failed."
-}
-```
-
-**응답 : 실패 (데이터베이스 오류)**
-```bash
-HTTP/1.1 500 Internal Server Error
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "DBE",
-  "message": "Database Error."
-}
-```
-
-***
-
-#### - 아이디 찾기 확인
-
-##### 설명
-
-클라이언트로부터 고객 | 디자이너 | 관리자는 회원가입시 등록한 이메일을 통해 인증을 받고 아이디 반환 페이지에서 아이디를 반환받을 수 있다.
-만약 잘못된 이메일, 인증번호를 불일치하게 되면 실패처리 됩니다. 데이터베이스 에러가 발생할 수 있습니다.
-
-- method : **GET**  
-- URL : **/id_found_value**
-
-##### Request
-
-###### Header
-
-| name | description | required |
-|---|:---:|:---:|
-
-###### Request Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| type | customer, desginer, admin |  
-
-###### Example
-
-```bash
-curl -v -X POST "http://localhost:4200/api/v1/auth/id_found_value" \
- -d "userId=service123" \
-```
-
-##### Response
-
-###### Header
-
-| name | description | required |
-|---|:---:|:---:|
-| Content-Type | 반환하는 Response Body의 Content Type (application/json) | O |
-
-###### Response Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| code | String | 응답 코드 | O |
-| message | String | 응답 메시지 | O |
-| userId | String | 사용자 아이디 | O |
-
-###### Example
-
-**응답 성공**
-```bash
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "SU",
-  "message": "Success.", 
-  "userId": "service123"
 }
 ```
 
@@ -974,84 +906,6 @@ Content-Type: application/json;charset=UTF-8
 
 ***
 
-#### - 로그아웃
-  
-##### 설명
-클라이언트로부터 시스템 로그아웃을 요청하여 사용자의 세션을 종료하고 인증 토큰을 무효화하여 사용자의 계정 보안을 유지하는데 사용한다. 데이터베이스 오류가 발생할 수 있다.
-
-
-- method : **POST**  
-- URL : **/logout**  
-
-##### Request
-
-###### Header
-
-| name | description | required |
-|---|:---:|:---:|
-| Authorization | 인증에 사용될 Bearer 토큰 | O |
-
-###### Request Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-
-###### Example
-
-```bash
-curl -v -X POST "http://localhost:4200/api/v1/auth/logout" \
- -H "Authorization: Bearer {JWT}"
-```
-
-##### Response
-
-###### Header
-
-| name | description | required |
-|---|:---:|:---:|
-| Content-Type | 반환하는 Response Body의 Content Type (application/json) | O |
-
-###### Response Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| code | String | 응답 코드 | O |
-| message | String | 응답 메시지 | O |
-
-
-###### Example
-
-**응답 성공**
-```bash
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "SU",
-  "message": "Success."
-}
-```
-
-**응답 : 실패 (인가 실패)**
-
-```bash
-HTTP/1.1 403 Forbidden
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "AF",
-  "message": "Authorization Failed."
-}
-```
-
-**응답 : 실패 (데이터베이스 오류)**
-```bash
-HTTP/1.1 500 Internal Server Error
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "DBE",
-  "message": "Database Error."
-}
-```
-
 #### - 내 정보
   
 ##### 설명
@@ -1130,16 +984,131 @@ Content-Type: application/json;charset=UTF-8
 ```
 
 ***
+<<<<<<< HEAD
 
 #### - 개인정보수정
 
+=======
+#### - 고객정보수정
+  
+>>>>>>> e9be5ee96bffddb42ec7ea2e6b0ebb8fd85b41ad
 ##### 설명
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 클라이언트로부터 고객 | 관리자는 아이디를 제외한, 비밀번호, 연령대, 성별의 값을 입력받고 디자이너는 면허증 사진 파일, 업체명을 추가로 입력받습니다. 정상적으로 개인정보 수정이 완료되면 성공처리를 합니다.
 만약 작성에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
 
 
 - method : **POST**  
-- URL : **/update**  
+- URL : **/update_customer**  
+
+##### Request
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Authorization | 인증에 사용될 Bearer 토큰 | O |
+
+###### Request Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| userId | String | 사용자 아이디 | O |
+| userEmail | String | 사용자 이메일 (이메일 형태의 데이터) | O |
+| userGender | String | 수정할 성별 | O  |
+| userAge | Int | 수정할 나이 | O |
+| type | customer, desginer, admin |  
+
+###### Example
+
+```bash
+curl -v -X POST "http://localhost:4200/api/v1/auth/update" \
+ -H "Authorization: Bearer {JWT}" \
+ -d "userId=service123" \
+ -d "userPassword=Pa55w0rd" \
+ -d "userEmail=email@email.com" \
+ -d "authNumber=0123" \
+ -d "userAge":"20" \
+ -d "userGender":"male"
+```
+
+##### Response
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Content-Type | 반환하는 Response Body의 Content Type (application/json) | O |
+
+###### Response Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| code | String | 응답 코드 | O |
+| message | String | 응답 메시지 | O |
+
+
+###### Example
+
+**응답 성공**
+```bash
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "SU",
+  "message": "Success."
+}
+```
+
+**응답 : 실패 (데이터 유효성 검사 실패)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "VF",
+  "message": "Varidation Failed."
+}
+```
+
+**응답 : 실패 (이메일 인증 실패)**
+```bash
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "AF",
+  "message": "Authentication Failed."
+}
+```
+
+**응답 : 실패 (인가 실패)**
+
+```bash
+HTTP/1.1 403 Forbidden
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "AF",
+  "message": "Authorization Failed."
+}
+```
+
+**응답 : 실패 (데이터베이스 오류)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "DBE",
+  "message": "Database Error."
+}
+```
+***
+#### - 디자이너정보수정
+  
+##### 설명
+클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 클라이언트로부터 고객 | 관리자는 아이디를 제외한, 비밀번호, 연령대, 성별의 값을 입력받고 디자이너는 면허증 사진 파일, 업체명을 추가로 입력받습니다. 정상적으로 개인정보 수정이 완료되면 성공처리를 합니다.
+만약 작성에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
+
+
+- method : **POST**  
+- URL : **/update_designer**  
 
 ##### Request
 

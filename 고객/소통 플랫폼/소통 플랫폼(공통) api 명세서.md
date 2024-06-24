@@ -1,11 +1,11 @@
-소통 플랫폼(공통)api 명세서 0.5v
+소통 플랫폼(공통)api 명세서 0.6v
 
 -Domain: http://localhost:4200
 
 <h2 style='background-color: rgba(55, 55, 55, 0.2); text-align: center'>소통 플랫폼 모듈</h2>
 
 인증 및 인가와 관련된 REST API 모듈
-게시물 리스트보기, 검색, 답글 작성, 삭제, 수정 등의 REST API가 포함되어 있습니다.
+게시물 리스트보기, 검색, 댓글 작성, 삭제, 수정 등의 REST API가 포함되어 있습니다.
 
 - url: /api/v1/customer_board
 
@@ -72,7 +72,7 @@ Content-Type: application/json;charset=UTF-8
     {
       "customerBoardNumber " : 1,
       "customerBoardtitle": "헤어 스타일 추천해주세요.", 
-      "customerBoardWriterId": "d***",
+      "customerBoardWriterId": "dddd",
       "customerBoardwriteDatetime": "23.05.15",
       "customerBoardViewCount": 15
     }, ...
@@ -89,16 +89,6 @@ Content-Type: application/json;charset=UTF-8
   "message": "Authorization Failed."
 }
 ```
-
-```bash
-HTTP/1.1 404 Not Found
-Content-Type: application/json; charset=UTF-8
-{
-  "code": "PNF",
-  "message": "Page Not Found."
-}
-```
-
 **응답 : 실패 (데이터베이스 오류)**
 ```bash
 HTTP/1.1 500 Internal Server Error
@@ -179,7 +169,7 @@ Content-Type: application/json;charset=UTF-8
     {
       "customerBoardNumber" : 1,
       "customerBoardTitle": "헤어 스타일 추천해주세요", 
-      "customerBoardWriterId": "d***",
+      "customerBoardWriterId": "dddd",
       "customerBoardWriteDatetime": "23.05.5",
       "customerBoardViewCount": 15
     }, ...
@@ -269,7 +259,8 @@ curl -v -X GET "http://localhost:4200/api/v1/customer_board/`${customerBoardNumb
 | customerBoardWriteDatetime | String | 작성일</br>(yyyy.mm.dd 형태) | O |
 | customerBoardViewCount | int | 조회수 | O |
 | customerBoardContents | String | 내용 | O |
-| customerBoardComment | String | 답글 내용 | X |
+| customerBoardComment | String | 댓글 내용 | X |
+| isSecret | Boolean | 비밀글 여부 | O |
 
 ###### Example
 
@@ -286,7 +277,8 @@ Content-Type: application/json;charset=UTF-8
   "customerBoardWriteDatetime": `${customerBoardWriteDatetime}`,
   "customerBoardViewCount": `${customerBoardViewCount}`,
   "customerBoardContents": `${customerBoardContents}`,
-  "customerBoardComment": `${customerBoardComment}`
+  "customerBoardComment": `${customerBoardComment}`,
+  "isSecret":`${secret}`
 }
 ```
 
@@ -432,11 +424,11 @@ Content-Type: application/json;charset=UTF-8
 
 ***
 
-#### - 소통 플랫폼 게시물 답글 작성  
+#### - 소통 플랫폼 게시물 댓글 작성  
   
 ##### 설명
 
-클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 게시물번호와 답글 내용을 입력받고 요청을 보내면 해당하는 소통 플랫폼 게시물의 답글이 작성됩니다. 만약 증가에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
+클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 게시물번호와 댓글 내용을 입력받고 요청을 보내면 해당하는 소통 플랫폼 게시물의 댓글이 작성됩니다. 만약 증가에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **POST**  
 - URL : **/{customerBoardNumber}/comment**  
@@ -459,7 +451,7 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| customerBoardComment | String | 답글 내용 | O |
+| customerBoardComment | String | 댓글 내용 | O |
 
 ###### Example
 
@@ -540,11 +532,11 @@ Content-Type: application/json;charset=UTF-8
 ***
 
 
-#### - 소통 플랫폼 게시물 답글 수정
+#### - 소통 플랫폼 게시물 댓글 수정
 
 ##### 설명
 
-클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 소통 플랫폼 게시판 게시물 번호,  작성자, 답글 내용, 작성일을 입력받고 수정에 성공하면 성공처리를 합니다. 만약 수정에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
+클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 소통 플랫폼 게시판 게시물 번호,  작성자, 댓글 내용, 작성일을 입력받고 수정에 성공하면 성공처리를 합니다. 만약 수정에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
 
 - method : **PUT**
 - URL : **/`${customerBoardNumber}`/comment**
@@ -567,9 +559,9 @@ Content-Type: application/json;charset=UTF-8
 
 | name     |  type  | description | required |
 | -------- | :----: | :---------: | :------: |
-| customerBoardCommentWriterId | String | 답글 작성자 | O |
-| customerBoardCommentContents | String | 답글 내용 | O |
-| customerBoardCommentWriteDatetime | String | 답글 작성일</br>(yy.mm.dd 형태) | O |
+| customerBoardCommentWriterId | String | 댓글 작성자 | O |
+| customerBoardCommentContents | String | 댓글 내용 | O |
+| customerBoardCommentWriteDatetime | String | 댓글 작성일</br>(yy.mm.dd 형태) | O |
 
 ###### Example
 
@@ -669,11 +661,11 @@ Content-Type: application/json;charset=UTF-8
 ***
 
 
-#### - 소통 플랫폼 게시물 답글 삭제  
+#### - 소통 플랫폼 게시물 댓글 삭제  
   
 ##### 설명
 
-클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 게시물 번호를 입력받고 요청을 보내면 해당하는 소통 플랫폼 게시물의 답글이 삭제됩니다. 만약 삭제에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
+클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 게시물 번호를 입력받고 요청을 보내면 해당하는 소통 플랫폼 게시물의 댓글이 삭제됩니다. 만약 삭제에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **DELETE**  
 - URL : **/`${customerBoardNumber}`/comment**  

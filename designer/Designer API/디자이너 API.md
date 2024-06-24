@@ -43,19 +43,8 @@
 ```bash
 curl -v -X POST "http://localhost:4200/api/v1/designer_board/" \
  -H "Authorization: Bearer {JWT}" \
-<<<<<<< HEAD
- -d "designerBoardTitle={designerBoardTitle}" \
-<<<<<<< HEAD
- -d "designer_board_contents={designeBboardContents}
-=======
- -d "designerBoardContents={designeBboardContents}
->>>>>>> 89c6bedaacfe4141b5e0eff0259daaad5462560b
-=======
- -d "designerBoardTitle"=`${designerBoardTitle}` \
- -d "designerBoardContents"=`${designeBoardContents}` \
->>>>>>> 061010a2a241b5f93609ab1aaab771e4531765c7
-```
-
+ -d "designerBoardTitle"=`{designerBoardTitle}` \
+ -d "designerBoardContents"=`${designerBoardContents}`
 ##### Response
 
 ###### Header
@@ -170,8 +159,6 @@ curl -v -X GET "http://localhost:4200/api/v1/designer_board/list" \
 |---|:---:|:---:|:---:|
 | designerBoardNumber | int | 디자이너 게시글 번호 | O |
 | designerBoardTitle | String | 제목 | O |
-<<<<<<< HEAD
-<<<<<<< HEAD
 | designerBoard_writerId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
 | designer_board_writeDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
 | designer_board_viewCount | int | 조회수 | O |
@@ -193,7 +180,7 @@ Content-Type: application/json;charset=UTF-8
     {
       "designerBoardNumber" : 1,
       "designerBoardtitle": "헤어 스타일 추천해주세요", 
-      "designerBoardWriterId": "d***",
+      "designerBoardWriterId": "dddd",
       "designerBoardWriteDatetime": "23.05.5",
       "designerBoardViewCount": 15
     }, ...
@@ -292,7 +279,7 @@ Content-Type: application/json;charset=UTF-8
     {
       "designerBoardNumber" : 1,
       "designerBoardTitle": "헤어 스타일 추천해주세요", 
-      "designerBoardWriterId": "d***",
+      "designerBoardWriterId": "dddd",
       "designerBoardWriteDatetime": "23.05.5",
       "designerBoardViewCount": 15
     }, ...
@@ -383,7 +370,7 @@ curl -v -X GET "http://localhost:4200/api/v1/designer_board/`${designerBoardNumb
 | designerBoardWriteDatetime | String | 작성일</br>(yyyy.mm.dd 형태) | O |
 | designerBoardViewCount | int | 조회수 | O |
 | designerBoardContents | String | 내용 | O |
-| designerBoardComment | String | 답글 내용 | X |
+| designerBoardComment | String | 댓글 내용 | X |
 
 ###### Example
 
@@ -547,11 +534,11 @@ Content-Type: application/json;charset=UTF-8
 ***
 
 
-#### - 디자이너 게시물 답글 작성  
+#### - 디자이너 게시물 댓글 작성  
   
 ##### 설명
 
-클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 게시물번호와 작성자, 답글 내용, 작성일을 입력받고 요청을 보내면 해당하는 디자이너 게시물의 답글이 작성됩니다. 만약 증가에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
+클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 게시물번호와 작성자, 댓글 내용, 작성일을 입력받고 요청을 보내면 해당하는 디자이너 게시물의 댓글이 작성됩니다. 만약 증가에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **POST**  
 - URL : **/`${desingerBoardNumber}`/comment**  
@@ -574,9 +561,9 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| designerBoardCommentWriterId | String | 답글 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 \*) | O |
-| designerBoardCommentContents | String | 답글 내용 | O |
-| designerBoardCommentWriteDatetime | String | 답글 작성일</br>(yy.mm.dd 형태) | O |
+| designerBoardCommentWriterId | String | 댓글 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 \*) | O |
+| designerBoardCommentContents | String | 댓글 내용 | O |
+| designerBoardCommentWriteDatetime | String | 댓글 작성일</br>(yy.mm.dd 형태) | O |
 
 ###### Example
 
@@ -658,11 +645,11 @@ Content-Type: application/json;charset=UTF-8
 
 ***
 
-#### - 디자이너  게시물 답글  수정
+#### - 디자이너  게시물 댓글 수정
 
 ##### 설명
 
-클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 디자이너 게시판 게시물 번호,  작성자, 답글 내용, 작성일을 입력받고 수정에 성공하면 성공처리를 합니다. 만약 수정에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
+클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 디자이너 게시판 게시물 번호,  작성자, 댓글 내용, 작성일을 입력받고 수정에 성공하면 성공처리를 합니다. 만약 수정에 실패하면 실패처리 됩니다. 인가 실패, 데이터베이스 에러, 데이터 유효성 검사 실패가 발생할 수 있습니다.
 
 - method : **PUT**
 - URL : **/`${designerBoardNumber}`/comment**
@@ -685,9 +672,9 @@ Content-Type: application/json;charset=UTF-8
 
 | name     |  type  | description | required |
 | -------- | :----: | :---------: | :------: |
-| designerBoardCommentWriterId | String | 답글 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 \*) | O |
-| designerBoardCommentContents | String | 답글 내용 | O |
-| designerBoardCommentWriteDatetime | String | 답글 작성일</br>(yyyy.mm.dd 형태) | O |
+| designerBoardCommentWriterId | String | 댓글 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 \*) | O |
+| designerBoardCommentContents | String | 댓글 내용 | O |
+| designerBoardCommentWriteDatetime | String | 댓글 작성일</br>(yyyy.mm.dd 형태) | O |
 
 ###### Example
 
@@ -787,11 +774,11 @@ Content-Type: application/json;charset=UTF-8
 ***
 
 
-#### - 디자이너 게시물 답글 삭제  
+#### - 디자이너 게시물 댓글 삭제  
   
 ##### 설명
 
-클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 게시물번호를 입력받고 요청을 보내면 해당하는 디자이너 게시물의 답글이 삭제됩니다. 만약 삭제에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
+클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 게시물번호를 입력받고 요청을 보내면 해당하는 디자이너 게시물의 댓글이 삭제됩니다. 만약 삭제에 실패하면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **DELETE**  
 - URL : **/`${designerBoardNumber}`/comment**  

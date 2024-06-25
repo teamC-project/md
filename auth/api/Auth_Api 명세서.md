@@ -17,7 +17,7 @@ Auth
 
 ***
 
-#### - 이메일 인증  
+#### - 회원가입 이메일 인증  
   
 ##### 설명
 
@@ -26,7 +26,7 @@ Auth
 만약 중복된 이메일이거나 이메일 전송에 실패했으면 실패처리를 합니다. 데이터베이스 오류가 발생할 수 있습니다.
 
 - method : **POST**  
-- URL : **/email_auth**  
+- URL : **/email-auth**  
 
 ##### Request
 
@@ -120,6 +120,107 @@ Content-Type: application/json;charset=UTF-8
 
 ***
 
+#### - 아이디 비밀번호 찾기 이메일 인증  
+  
+##### 설명
+
+클라이언트로부터 이메일을 입력받아 해당하는 이메일이 존재하는 이메일인지 확인하고 존재하는 이메일이라면 
+4자리의 인증코드를 해당 이메일로 전송합니다. 이메일 전송이 성공적으로 종료되었으면 성공처리를 합니다. 
+만약 중복된 이메일이거나 이메일 전송에 실패했으면 실패처리를 합니다. 데이터베이스 오류가 발생할 수 있습니다.
+
+- method : **POST**  
+- URL : **/found-email-auth**  
+
+##### Request
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+
+###### Request Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| userEmail | String | 인증 번호를 전송할 사용자 이메일</br>(이메일 형태의 데이터) | O |
+|  type | customer, desginer, admin |
+
+###### Example
+
+```bash
+curl -v -X POST "http://localhost:4200/api/v1/auth/found-email-auth" \
+ -d "userEmail=email@email.com"
+```
+
+##### Response
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Content-Type | 반환하는 Response Body의 Content Type (application/json) | O |
+| type | cutomer, desginer, admin |
+
+###### Response Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| code | String | 사용자의 아이디 | O |
+| message | String | 사용자의 비밀번호 | O |
+| type | cutomer, desginer, admin |
+
+###### Example
+
+**응답 성공**
+```bash
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "SU",
+  "message": "Success."
+}
+```
+
+**응답 : 실패 (데이터 유효성 검사 실패)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "VF",
+  "message": "Varidation Failed."
+}
+```
+
+**응답 : 실패 (중복된 이메일)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "DE",
+  "message": "Duplicatied Email."
+}
+```
+
+**응답 : 실패 (이메일 전송 실패)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "MF",
+  "message": "Mail send Failed."
+}
+```
+
+**응답 : 실패 (데이터베이스 오류)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "DBE",
+  "message": "Database Error."
+}
+```
+
 #### - 이메일 인증 확인
   
 ##### 설명
@@ -127,7 +228,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 이메일과 인증 번호를 입력받아 해당하는 이메일에 전송한 인증번호와 일치하는지 확인합니다. 일치한다면 성공처리를 합니다. 만약 일치하지 않는다면 실패처리를 합니다. 데이터베이스 오류가 발생할 수 있습니다.
 
 - method : **POST**  
-- URL : **/email_auth_check**  
+- URL : **/email-auth-check**
 
 ##### Request
 
@@ -214,73 +315,6 @@ Content-Type: application/json;charset=UTF-8
 
 ***
 
-#### - 회원가입(공통)
-  
-##### 설명
-
-클라이언트로부터 고객 | 관리자 회원가입 URL로 들어갈 수 있는 버튼이 각각 있습니다. 고객은 고객버튼, 디자이너는 디자이너 버튼을 클릭하여 해당 역할에 맞는 회원가입 URL로 이동하여 회원가입을 진행할 수 있습니다. 
-데이터베이스 오류가 발생할 수 있습니다.
-
-- method : **POST**  
-- URL : **/sign_up**  
-
-##### Request
-
-###### Header
-
-| name | description | required |
-|---|:---:|:---:|
-
-###### Request Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-
-###### Example
-
-```bash
-curl -v -X POST "http://localhost:4200/api/v1/auth/sign_up" \
-```
-
-##### Response
-
-###### Header
-
-| name | description | required |
-|---|:---:|:---:|
-| Content-Type | 반환하는 Response Body의 Content Type (application/json) | O |
-
-###### Response Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| code | String | 응답 코드 | O |
-| message | String | 응답 메시지 | O |
-
-###### Example
-
-**응답 성공**
-```bash
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "SU",
-  "message": "Success."
-}
-```
-
-**응답 : 실패 (데이터베이스 오류)**
-```bash
-HTTP/1.1 500 Internal Server Error
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "DBE",
-  "message": "Database Error."
-}
-```
-
-***
-
 #### - 고객 회원가입
   
 ##### 설명
@@ -289,7 +323,7 @@ Content-Type: application/json;charset=UTF-8
 만약 중복된 아이디, 중복된 이메일, 인증번호 불일치가 발생하면 실패처리를 합니다. 데이터베이스 오류가 발생할 수 있습니다.
 
 - method : **POST**  
-- URL : **/customer_sign_up**  
+- URL : **/sign-up/customer**  
 
 ##### Request
 
@@ -313,12 +347,12 @@ Content-Type: application/json;charset=UTF-8
 ###### Example
 
 ```bash
-curl -v -X POST "http://localhost:4200/api/v1/auth/customer_sign_up" \
+curl -v -X POST "http://localhost:4200/api/v1/auth/sign-up/customer" \
  -d "userId=service123" \
  -d "userPassword=Pa55w0rd" \
  -d "userEmail=email@email.com" \
  -d "authNumber=0123"  \
- -d "userAge":"20" \
+ -d "userAge":"20대" \
  -d "userGender":"male"
 ```
 
@@ -409,7 +443,7 @@ Content-Type: application/json;charset=UTF-8
 만약 중복된 아이디, 중복된 이메일, 인증번호 불일치가 발생하면 실패처리를 합니다. 데이터베이스 오류가 발생할 수 있습니다.
 
 - method : **POST**  
-- URL : **/desginer_sign_up**  
+- URL : **/sign-up/designer**  
 
 ##### Request
 
@@ -435,13 +469,15 @@ Content-Type: application/json;charset=UTF-8
 ###### Example
 
 ```bash
-curl -v -X POST "http://localhost:4200/api/v1/auth/desginer_sign_up" \
+curl -v -X POST "http://localhost:4200/api/v1/auth/sign-up/designer" \
  -d "userId=service123" \
  -d "userPassword=Pa55w0rd" \
  -d "userEmail=email@email.com" \
  -d "authNumber=0123"  \
- -d "userAge":"20" \
- -d "userGender":"male"
+ -d "userAge=20" \
+ -d "userGender=male" \
+ -d "userCompanyName=hair" \
+ -d "userImage=123.jgpe"
 ```
 
 ##### Response
@@ -530,7 +566,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 사용자 아이디와 평문의 비밀번호를 입력받고 아이디와 비밀번호가 일치한다면 성공처리가되며 access_token과 해당 토큰의 만료 기간을 반환합니다. 만약 아이디 혹은 비밀번호가 하나라도 틀리다면 실패 처리됩니다. 서버 에러, 데이터베이스 에러, 토큰 생성 에러가 발생할 수 있습니다.
 
 - method : **POST**  
-- URL : **/sign_in**  
+- URL : **/sign-in**  
 
 ##### Request
 
@@ -632,11 +668,11 @@ Content-Type: application/json;charset=UTF-8
 
 ##### 설명
 
-클라이언트로부터 고객 | 디자이너 | 관리자는 회원가입시 등록한 이메일을 통해 인증을 받고 아이디를 찾을 수 잇다.
+클라이언트로부터 고객 | 디자이너는 회원가입시 등록한 이메일을 통해 인증을 받고 아이디를 찾을 수 잇다.
 만약 잘못된 이메일, 인증번호를 불일치하게 되면 실패처리 됩니다. 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **POST**  
-- URL : **/id_found**  
+- URL : **/id-found**  
 
 ##### Request
 
@@ -656,7 +692,7 @@ Content-Type: application/json;charset=UTF-8
 ###### Example
 
 ```bash
-curl -v -X POST "http://localhost:4200/api/v1/auth/id_found" \
+curl -v -X POST "http://localhost:4200/api/v1/auth/id-found" \
  -d "userEmail=email@email.com" \
  -d "authNumber=0123"
 ```
@@ -733,15 +769,15 @@ Content-Type: application/json;charset=UTF-8
 
 ***
 
-#### - 비밀번호 찾기
+#### - 비밀번호찾기 사용자 확인
 
 ##### 설명
 
-클라이언트로부터 고객 | 디자이너 | 관리자는 회원가입시 등록한 아이디와 이메일을 통해 인증을 받고 비밀번호를 찾을수 있다.
+클라이언트로부터 고객 | 디자이너는 회원가입시 등록한 아이디와 이메일을 통해 인증을 받고 비밀번호 재설정하는 페이지로 갈 수 있다.
 만약 잘못된 아이디와 이메일, 이메일 인증번호 중 하나라도 입력이 잘못되면 실패처리 된다. 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **POST**  
-- URL : **/password_found**  
+- URL : **/password-found**  
 
 ##### Request
 
@@ -832,7 +868,7 @@ Content-Type: application/json;charset=UTF-8
 ##### 설명
 클라이언트로부터 재설정할 비밀번호를 필수로 입력하여 성공처리 한다. 만약 유효성에 어긋난다면 실패 처리한다. 데이터베이스 오류가 발생할 수 있다.
 - method : **POST**  
-- URL : **/password_change**  
+- URL : **/password-reset**  
 
 ##### Request
 
@@ -850,7 +886,7 @@ Content-Type: application/json;charset=UTF-8
 ###### Example
 
 ```bash
-curl -v -X POST "http://localhost:4200/api/v1/auth/password_change" \
+curl -v -X POST "http://localhost:4200/api/v1/auth/password-reset" \
  -d '{"userPassword":"qwe123"}' \
 
 ```
@@ -903,8 +939,5 @@ Content-Type: application/json;charset=UTF-8
   "message": "Database Error."
 }
 ```
-<<<<<<< HEAD
-=======
 
 ***
->>>>>>> 18962731b92bf28355711346cfa77bb86fcc9ef1
